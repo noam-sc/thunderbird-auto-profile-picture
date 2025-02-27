@@ -1,0 +1,100 @@
+{
+  "extensionName": {
+    "message": "Automatyczne zdjęcie profilowe",
+    "description": "Nazwa rozszerzenia."
+  },
+  "extensionDescription": {
+    "message": "Ulepsz swoją skrzynkę odbiorczą Thunderbird za pomocą automatycznych zdjęć profilowych, dodając loga firm lub awatary do e-maili i kontaktów, wspierając BIMI",
+    "description": "Opis rozszerzenia."
+  },
+  "featuresHeader": {
+    "message": "Funkcje",
+    "description": "Nagłówek sekcji funkcji."
+  },
+  "contactsIntegrationLabel": {
+    "message": "Automatycznie dodaj zdjęcie profilowe podczas zapisywania kontaktu",
+    "description": "Etykieta dla pola wyboru integracji kontaktów."
+  },
+  "inboxListLabel": {
+    "message": "Włącz zdjęcia na liście skrzynki odbiorczej (Eksperymentalne)",
+    "description": "Etykieta dla pola wyboru listy skrzynki odbiorczej."
+  },
+  "inboxListDescription": {
+    "message": "Włącz tę opcję, aby wyświetlać zdjęcia profilowe na liście skrzynki odbiorczej.",
+    "description": "Opis funkcji listy skrzynki odbiorczej."
+  },
+  "inboxListWarning": {
+    "message": "Ostrzeżenie: Ta funkcja jest eksperymentalna i może nie działać zgodnie z oczekiwaniami. Jeśli napotkasz problemy, wyłącz tę opcję i zgłoś problem.",
+    "description": "Ostrzeżenie dla funkcji listy skrzynki odbiorczej."
+  },
+  "inboxListKnownIssues": {
+    "message": "Znane problemy:",
+    "description": "Nagłówek listy znanych problemów."
+  },
+  "inboxListIssueLaggyScrolling": {
+    "message": "Powolne przewijanie",
+    "description": "Znany problem: Powolne przewijanie."
+  },
+  "inboxListIssueVisualFlickering": {
+    "message": "Migotanie wizualne (zastępniki i ikony)",
+    "description": "Znany problem: Migotanie wizualne."
+  },
+  "inboxListIssueSlowFirstLoad": {
+    "message": "Powolne pierwsze ładowanie",
+    "description": "Znany problem: Powolne pierwsze ładowanie."
+  },
+  "inboxListIssueBigFolders": {
+    "message": "Problemy z dużymi folderami",
+    "description": "Znany problem: Problemy z dużymi folderami."
+  },
+  "cacheHeader": {
+    "message": "Pamięć podręczna",
+    "description": "Nagłówek sekcji pamięci podręcznej."
+  },
+  "cacheSizeLabel": {
+    "message": "Rozmiar:",
+    "description": "Etykieta dla wyświetlania rozmiaru pamięci podręcznej."
+  },
+  "clearCacheButton": {
+    "message": "Wyczyść pamięć podręczną",
+    "description": "Etykieta dla przycisku czyszczenia pamięci podręcznej."
+  },
+  "cacheCleared": {
+    "message": "Pamięć podręczna wyczyszczona",
+    "description": "Komunikat wyświetlany po wyczyszczeniu pamięci podręcznej."
+  },
+  "testHeader": {
+    "message": "Sprawdź zdjęcie profilowe",
+    "description": "Nagłówek sekcji testowej."
+  },
+  "emailInputPlaceholder": {
+    "message": "E-mail, który chcesz przetestować",
+    "description": "Zastępnik dla pola wprowadzania e-maila."
+  },
+  "fetchButtonLabel": {
+    "message": "Pokaż",
+    "description": "Etykieta dla przycisku pobierania."
+  },
+  "profilePictureNotFound": {
+    "message": "Nie znaleziono zdjęcia profilowego",
+    "description": "Komunikat wyświetlany, gdy nie znaleziono zdjęcia profilowego."
+  },
+  "noIcons": {
+    "message": "Brak ikon",
+    "description": "Liczba wyświetlana, gdy w pamięci podręcznej nie ma ikon."
+  },
+  "oneIcon": {
+    "message": "1 ikona",
+    "description": "Liczba wyświetlana, gdy w pamięci podręcznej jest 1 ikona."
+  },
+  "multipleIcons": {
+    "message": "$NB$ ikony",
+    "description": "Liczba wyświetlana, gdy w pamięci podręcznej jest wiele ikon.",
+    "placeholders": {
+      "NB": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  }
+}

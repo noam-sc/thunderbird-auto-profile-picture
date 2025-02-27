@@ -1,0 +1,100 @@
+{
+  "extensionName": {
+    "message": "Automatische Profielfoto",
+    "description": "Naam van de extensie."
+  },
+  "extensionDescription": {
+    "message": "Verbeter je Thunderbird-inbox met automatische profielfoto's, door bedrijfslogo's of avatars toe te voegen aan e-mails en contacten, en BIMI te ondersteunen",
+    "description": "Beschrijving van de extensie."
+  },
+  "featuresHeader": {
+    "message": "Functies",
+    "description": "Kop voor de functiesectie."
+  },
+  "contactsIntegrationLabel": {
+    "message": "Automatisch een profielfoto toevoegen bij het opslaan van een contact",
+    "description": "Label voor het selectievakje voor contactintegratie."
+  },
+  "inboxListLabel": {
+    "message": "Afbeeldingen in de inboxlijst inschakelen (Experimenteel)",
+    "description": "Label voor het selectievakje van de inboxlijst."
+  },
+  "inboxListDescription": {
+    "message": "Schakel deze optie in om profielfoto's in de inboxlijst weer te geven.",
+    "description": "Beschrijving van de functie van de inboxlijst."
+  },
+  "inboxListWarning": {
+    "message": "Waarschuwing: Deze functie is experimenteel en werkt mogelijk niet zoals verwacht. Als je problemen ondervindt, schakel deze optie dan uit en meld het probleem.",
+    "description": "Waarschuwingsbericht voor de functie van de inboxlijst."
+  },
+  "inboxListKnownIssues": {
+    "message": "Bekende problemen:",
+    "description": "Kop voor de lijst met bekende problemen."
+  },
+  "inboxListIssueLaggyScrolling": {
+    "message": "Trage scrollen",
+    "description": "Bekend probleem: Trage scrollen."
+  },
+  "inboxListIssueVisualFlickering": {
+    "message": "Visueel flikkeren (plaatsaanduidingen en pictogrammen)",
+    "description": "Bekend probleem: Visueel flikkeren."
+  },
+  "inboxListIssueSlowFirstLoad": {
+    "message": "Traag tijdens de eerste lading",
+    "description": "Bekend probleem: Traag tijdens de eerste lading."
+  },
+  "inboxListIssueBigFolders": {
+    "message": "Problemen met grote mappen",
+    "description": "Bekend probleem: Problemen met grote mappen."
+  },
+  "cacheHeader": {
+    "message": "Cache",
+    "description": "Kop voor de cache-sectie."
+  },
+  "cacheSizeLabel": {
+    "message": "Grootte:",
+    "description": "Label voor de weergave van de cachegrootte."
+  },
+  "clearCacheButton": {
+    "message": "Cache wissen",
+    "description": "Label voor de knop om de cache te wissen."
+  },
+  "cacheCleared": {
+    "message": "Cache gewist",
+    "description": "Bericht dat wordt weergegeven wanneer de cache is gewist."
+  },
+  "profilePictureNotFound": {
+    "message": "Profielfoto niet gevonden",
+    "description": "Bericht dat wordt weergegeven wanneer de profielfoto niet wordt gevonden."
+  },
+  "testHeader": {
+    "message": "Controleer een profielfoto",
+    "description": "Kop voor de testsectie."
+  },
+  "emailInputPlaceholder": {
+    "message": "E-mail die je wilt testen",
+    "description": "Plaatshouder voor het e-mailinvoerveld."
+  },
+  "fetchButtonLabel": {
+    "message": "Weergeven",
+    "description": "Label voor de ophaalknop."
+  },
+  "noIcons": {
+    "message": "Geen iconen",
+    "description": "Aantal weergegeven wanneer er geen iconen in de cache zijn opgeslagen."
+  },
+  "oneIcon": {
+    "message": "1 icoon",
+    "description": "Aantal weergegeven wanneer er 1 icoon in de cache is opgeslagen."
+  },
+  "multipleIcons": {
+    "message": "$NB$ iconen",
+    "description": "Aantal weergegeven wanneer er meerdere iconen in de cache zijn opgeslagen.",
+    "placeholders": {
+      "NB": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  }
+}

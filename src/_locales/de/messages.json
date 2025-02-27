@@ -1,0 +1,100 @@
+{
+  "extensionName": {
+    "message": "Automatisches Profilbild",
+    "description": "Name der Erweiterung."
+  },
+  "extensionDescription": {
+    "message": "Verbessern Sie Ihren Thunderbird-Posteingang mit automatischen Profilbildern, indem Sie Firmenlogos oder Avatare zu E-Mails und Kontakten hinzufügen und BIMI unterstützen",
+    "description": "Beschreibung der Erweiterung."
+  },
+  "featuresHeader": {
+    "message": "Funktionen",
+    "description": "Überschrift für den Funktionsbereich."
+  },
+  "contactsIntegrationLabel": {
+    "message": "Profilbild automatisch hinzufügen, wenn ein Kontakt gespeichert wird",
+    "description": "Beschriftung für das Kontrollkästchen zur Kontaktintegration."
+  },
+  "inboxListLabel": {
+    "message": "Bilder in der Posteingangsliste aktivieren (Experimentell)",
+    "description": "Beschriftung für das Kontrollkästchen der Posteingangsliste."
+  },
+  "inboxListDescription": {
+    "message": "Aktivieren Sie diese Option, um Profilbilder in der Posteingangsliste anzuzeigen.",
+    "description": "Beschreibung der Funktion der Posteingangsliste."
+  },
+  "inboxListWarning": {
+    "message": "Warnung: Diese Funktion ist experimentell und funktioniert möglicherweise nicht wie erwartet. Wenn Sie Probleme feststellen, deaktivieren Sie diese Option und melden Sie das Problem.",
+    "description": "Warnmeldung für die Funktion der Posteingangsliste."
+  },
+  "inboxListKnownIssues": {
+    "message": "Bekannte Probleme:",
+    "description": "Überschrift für die Liste der bekannten Probleme."
+  },
+  "inboxListIssueLaggyScrolling": {
+    "message": "Ruckelndes Scrollen",
+    "description": "Bekanntes Problem: Ruckelndes Scrollen."
+  },
+  "inboxListIssueVisualFlickering": {
+    "message": "Visuelles Flackern (Platzhalter und Symbole)",
+    "description": "Bekanntes Problem: Visuelles Flackern."
+  },
+  "inboxListIssueSlowFirstLoad": {
+    "message": "Langsam beim ersten Laden",
+    "description": "Bekanntes Problem: Langsam beim ersten Laden."
+  },
+  "inboxListIssueBigFolders": {
+    "message": "Probleme mit großen Ordnern",
+    "description": "Bekanntes Problem: Probleme mit großen Ordnern."
+  },
+  "cacheHeader": {
+    "message": "Cache",
+    "description": "Überschrift für den Cache-Bereich."
+  },
+  "cacheSizeLabel": {
+    "message": "Größe:",
+    "description": "Beschriftung für die Anzeige der Cache-Größe."
+  },
+  "clearCacheButton": {
+    "message": "Cache leeren",
+    "description": "Beschriftung für die Schaltfläche zum Leeren des Caches."
+  },
+  "cacheCleared": {
+    "message": "Cache geleert",
+    "description": "Nachricht, die angezeigt wird, wenn der Cache geleert ist."
+  },
+  "testHeader": {
+    "message": "Ein Profilbild überprüfen",
+    "description": "Überschrift für den Testbereich."
+  },
+  "emailInputPlaceholder": {
+    "message": "E-Mail, die Sie testen möchten",
+    "description": "Platzhalter für das E-Mail-Eingabefeld."
+  },
+  "fetchButtonLabel": {
+    "message": "Anzeigen",
+    "description": "Beschriftung für die Abrufschaltfläche."
+  },
+  "profilePictureNotFound": {
+    "message": "Profilbild nicht gefunden",
+    "description": "Nachricht, die angezeigt wird, wenn das Profilbild nicht gefunden wird."
+  },
+  "noIcons": {
+    "message": "Keine Symbole",
+    "description": "Anzahl, die angezeigt wird, wenn keine Symbole im Cache gespeichert sind."
+  },
+  "oneIcon": {
+    "message": "1 Symbol",
+    "description": "Anzahl, die angezeigt wird, wenn 1 Symbol im Cache gespeichert ist."
+  },
+  "multipleIcons": {
+    "message": "$NB$ Symbole",
+    "description": "Anzahl, die angezeigt wird, wenn mehrere Symbole im Cache gespeichert sind.",
+    "placeholders": {
+      "NB": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  }
+}

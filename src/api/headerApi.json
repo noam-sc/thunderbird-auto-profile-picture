@@ -1,0 +1,92 @@
+[
+  {
+    "namespace": "headerApi",
+    "functions": [
+      {
+        "name": "pictureHeaders",
+        "type": "function",
+        "async": true,
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "tabId",
+            "optional": true
+          },
+          {
+            "type": "string",
+            "name": "url",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "name": "pictureHeadersConversation",
+        "type": "function",
+        "async": true,
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "tabId",
+            "optional": true
+          },
+          {
+            "type": "string",
+            "name": "url",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "name": "pictureInboxList",
+        "type": "function",
+        "async": true,
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "tabId",
+            "optional": false
+          },
+          {
+            "type": "string",
+            "name": "urls",
+            "optional": true
+          },
+          {
+            "type": "integer",
+            "name": "offset",
+            "optional": true
+          },
+          {
+            "type": "boolean",
+            "name": "initials",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "name": "getFirstDisplayedMessageId",
+        "type": "function",
+        "async": true,
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "tabId",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "name": "getTotalMessagesCount",
+        "type": "function",
+        "async": true,
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "tabId",
+            "optional": true
+          }
+        ]
+      }
+    ]
+  }
+]

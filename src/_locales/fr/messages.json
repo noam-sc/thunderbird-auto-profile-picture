@@ -1,0 +1,100 @@
+{
+    "extensionName": {
+      "message": "Photo de profil automatique",
+      "description": "Nom de l'extension."
+    },
+    "extensionDescription": {
+        "message": "Améliorez Thunderbird avec des photos de profil automatiques, en ajoutant des logos d'entreprise ou des avatars aux e-mails et contacts tout en prenant en charge BIMI",
+      "description": "Description de l'extension."
+    },
+    "featuresHeader": {
+        "message": "Fonctionnalités",
+        "description": "En-tête de la section des fonctionnalités."
+    },
+    "contactsIntegrationLabel": {
+        "message": "Rajouter automatiquement une photo de profil lors de la création d'un contact",
+        "description": "Libellé pour la case à cocher d'intégration des contacts."
+    },
+    "inboxListLabel": {
+        "message": "Activer les photos de profil dans la liste de la boîte de réception (Expérimental)",
+        "description": "Libellé pour la case à cocher de la liste de la boîte de réception."
+    },
+    "inboxListDescription": {
+        "message": "Activez cette option pour afficher les photos de profil dans la liste de la boîte de réception.",
+        "description": "Description de la fonctionnalité de la liste de la boîte de réception."
+    },
+    "inboxListWarning": {
+        "message": "Avertissement : Cette fonctionnalité est expérimentale et peut ne pas fonctionner comme prévu. Si vous rencontrez des problèmes, veuillez désactiver cette option et signaler le problème.",
+        "description": "Message d'avertissement pour la fonctionnalité de la liste de la boîte de réception."
+    },
+    "inboxListKnownIssues": {
+        "message": "Problèmes connus :",
+        "description": "En-tête de la liste des problèmes connus."
+    },
+    "inboxListIssueLaggyScrolling": {
+        "message": "Défilement saccadé",
+        "description": "Problème connu : Défilement saccadé."
+    },
+    "inboxListIssueVisualFlickering": {
+        "message": "Scintillement visuel (espaces réservés et icônes)",
+        "description": "Problème connu : Scintillement visuel."
+    },
+    "inboxListIssueSlowFirstLoad": {
+        "message": "Lent lors du premier chargement",
+        "description": "Problème connu : Lent lors du premier chargement."
+    },
+    "inboxListIssueBigFolders": {
+        "message": "Difficultés avec les grands dossiers",
+        "description": "Problème connu : Difficultés avec les grands dossiers."
+    },
+    "cacheHeader": {
+        "message": "Cache",
+        "description": "En-tête de la section du cache."
+    },
+    "cacheSizeLabel": {
+        "message": "Taille :",
+        "description": "Libellé pour l'affichage de la taille du cache."
+    },
+    "clearCacheButton": {
+        "message": "Vider le cache",
+        "description": "Libellé pour le bouton de vidage du cache."
+    },
+    "cacheCleared": {
+        "message": "Cache vidé",
+        "description": "Message affiché lorsque le cache est vidé."
+    },
+    "profilePictureNotFound": {
+        "message": "Photo de profil non trouvée",
+        "description": "Message affiché lorsque la photo de profil n'est pas trouvée."
+    },
+    "testHeader": {
+        "message": "Vérifier une photo de profil",
+        "description": "En-tête de la section de test."
+    },
+    "emailInputPlaceholder": {
+        "message": "Email que vous souhaitez tester",
+        "description": "Texte de l'espace réservé pour le champ de saisie de l'email."
+    },
+    "fetchButtonLabel": {
+        "message": "Afficher",
+        "description": "Libellé pour le bouton de récupération."
+    },
+    "noIcons": {
+        "message": "Aucune icône",
+        "description": "Nombre affiché lorsqu'aucune icône n'est stockée dans le cache."
+    },
+    "oneIcon": {
+        "message": "1 icône",
+        "description": "Nombre affiché lorsqu'une icône est stockée dans le cache."
+    },
+    "multipleIcons": {
+        "message": "$NB$ icônes",
+        "description": "Nombre affiché lorsque plusieurs icônes sont stockées dans le cache.",
+        "placeholders": {
+            "NB": {
+                "content": "$1",
+                "example": "3"
+            }
+        }
+    }
+}

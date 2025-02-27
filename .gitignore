@@ -1,0 +1,4 @@
+*.xpi
+/public/
+*.png
+pico.css

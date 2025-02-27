@@ -1,0 +1,100 @@
+{
+  "extensionName": {
+    "message": "Auto Profile Picture",
+    "description": "Name of the extension."
+  },
+  "extensionDescription": {
+    "message": "Enhance your Thunderbird inbox with automated profile images, adding company logos or avatars to emails and contacts while supporting BIMI",
+    "description": "Description of the extension."
+  },
+  "featuresHeader": {
+    "message": "Features",
+    "description": "Header for the features section."
+  },
+  "contactsIntegrationLabel": {
+    "message": "Auto add profile picture when saving a contact",
+    "description": "Label for the contacts integration checkbox."
+  },
+  "inboxListLabel": {
+    "message": "Enable pictures in inbox list (Experimental)",
+    "description": "Label for the inbox list checkbox."
+  },
+  "inboxListDescription": {
+    "message": "Enable this option to show profile pictures in the inbox list.",
+    "description": "Description for the inbox list feature."
+  },
+  "inboxListWarning": {
+    "message": "Warning: This feature is experimental and may not work as expected. If you encounter any issues, please disable this option and report the issue.",
+    "description": "Warning message for the inbox list feature."
+  },
+  "inboxListKnownIssues": {
+    "message": "Known issues are:",
+    "description": "Header for the known issues list."
+  },
+  "inboxListIssueLaggyScrolling": {
+    "message": "Laggy scrolling",
+    "description": "Known issue: Laggy scrolling."
+  },
+  "inboxListIssueVisualFlickering": {
+    "message": "Visual flickering (placeholders and icons)",
+    "description": "Known issue: Visual flickering."
+  },
+  "inboxListIssueSlowFirstLoad": {
+    "message": "Slow during the first load",
+    "description": "Known issue: Slow during the first load."
+  },
+  "inboxListIssueBigFolders": {
+    "message": "Struggles with big folders",
+    "description": "Known issue: Struggles with big folders."
+  },
+  "cacheHeader": {
+    "message": "Cache",
+    "description": "Header for the cache section."
+  },
+  "cacheSizeLabel": {
+    "message": "Size :",
+    "description": "Label for the cache size display."
+  },
+  "clearCacheButton": {
+    "message": "Clear Cache",
+    "description": "Label for the clear cache button."
+  },
+  "cacheCleared": {
+    "message": "Cache cleared",
+    "description": "Message displayed when the cache is cleared."
+  },
+  "profilePictureNotFound": {
+    "message": "Profile picture not found",
+    "description": "Message displayed when the profile picture is not found."
+  },
+  "testHeader": {
+    "message": "Check a profile picture",
+    "description": "Header for the test section."
+  },
+  "emailInputPlaceholder": {
+    "message": "Email you want to test",
+    "description": "Placeholder for the email input field."
+  },
+  "fetchButtonLabel": {
+    "message": "Show",
+    "description": "Label for the fetch button."
+  },
+  "noIcons": {
+    "message": "No icons",
+    "description": "Count displayed when no icons are stored in cache."
+  },
+  "oneIcon": {
+    "message": "1 icon",
+    "description": "Count displayed when 1 icon is stored in cache."
+  },
+  "multipleIcons": {
+    "message": "$NB$ icons",
+    "description": "Count displayed when multiple icons are stored in cache.",
+    "placeholders": {
+      "NB": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  }
+}

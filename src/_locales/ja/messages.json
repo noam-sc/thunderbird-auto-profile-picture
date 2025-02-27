@@ -1,0 +1,100 @@
+{
+  "extensionName": {
+    "message": "自動プロフィール画像",
+    "description": "拡張機能の名前。"
+  },
+  "extensionDescription": {
+    "message": "Thunderbirdの受信トレイを自動プロフィール画像で強化し、企業ロゴやアバターをメールや連絡先に追加し、BIMIをサポートします",
+    "description": "拡張機能の説明。"
+  },
+  "featuresHeader": {
+    "message": "機能",
+    "description": "機能セクションのヘッダー。"
+  },
+  "contactsIntegrationLabel": {
+    "message": "連絡先を保存する際に自動的にプロフィール画像を追加",
+    "description": "連絡先統合チェックボックスのラベル。"
+  },
+  "inboxListLabel": {
+    "message": "受信トレイリストに画像を表示（実験的）",
+    "description": "受信トレイリストチェックボックスのラベル。"
+  },
+  "inboxListDescription": {
+    "message": "このオプションを有効にすると、受信トレイリストにプロフィール画像が表示されます。",
+    "description": "受信トレイリスト機能の説明。"
+  },
+  "inboxListWarning": {
+    "message": "警告：この機能は実験的であり、期待通りに動作しない場合があります。問題が発生した場合は、このオプションを無効にして問題を報告してください。",
+    "description": "受信トレイリスト機能の警告メッセージ。"
+  },
+  "inboxListKnownIssues": {
+    "message": "既知の問題：",
+    "description": "既知の問題リストのヘッダー。"
+  },
+  "inboxListIssueLaggyScrolling": {
+    "message": "スクロールが遅い",
+    "description": "既知の問題：スクロールが遅い。"
+  },
+  "inboxListIssueVisualFlickering": {
+    "message": "視覚的なちらつき（プレースホルダーとアイコン）",
+    "description": "既知の問題：視覚的なちらつき。"
+  },
+  "inboxListIssueSlowFirstLoad": {
+    "message": "最初の読み込みが遅い",
+    "description": "既知の問題：最初の読み込みが遅い。"
+  },
+  "inboxListIssueBigFolders": {
+    "message": "大きなフォルダでの問題",
+    "description": "既知の問題：大きなフォルダでの問題。"
+  },
+  "cacheHeader": {
+    "message": "キャッシュ",
+    "description": "キャッシュセクションのヘッダー。"
+  },
+  "cacheSizeLabel": {
+    "message": "サイズ：",
+    "description": "キャッシュサイズ表示のラベル。"
+  },
+  "clearCacheButton": {
+    "message": "キャッシュをクリア",
+    "description": "キャッシュクリアボタンのラベル。"
+  },
+  "cacheCleared": {
+    "message": "キャッシュがクリアされました",
+    "description": "キャッシュがクリアされたときに表示されるメッセージ。"
+  },
+  "profilePictureNotFound": {
+    "message": "プロフィール画像が見つかりません",
+    "description": "プロフィール画像が見つからないときに表示されるメッセージ。"
+  },
+  "testHeader": {
+    "message": "プロフィール画像を確認",
+    "description": "テストセクションのヘッダー。"
+  },
+  "emailInputPlaceholder": {
+    "message": "テストしたいメール",
+    "description": "メール入力フィールドのプレースホルダー。"
+  },
+  "fetchButtonLabel": {
+    "message": "表示",
+    "description": "取得ボタンのラベル。"
+  },
+  "noIcons": {
+    "message": "アイコンなし",
+    "description": "キャッシュにアイコンが保存されていないときに表示される数。"
+  },
+  "oneIcon": {
+      "message": "1 アイコン",
+      "description": "キャッシュに1つのアイコンが保存されているときに表示される数。"
+  },
+  "multipleIcons": {
+      "message": "$NB$ アイコン",
+      "description": "キャッシュに複数のアイコンが保存されているときに表示される数。",
+      "placeholders": {
+          "NB": {
+              "content": "$1",
+              "example": "3"
+          }
+      }
+  }
+}

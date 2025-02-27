@@ -1,0 +1,100 @@
+{
+  "extensionName": {
+    "message": "Foto de perfil automática",
+    "description": "Nombre de la extensión."
+  },
+  "extensionDescription": {
+    "message": "Mejora tu bandeja de entrada de Thunderbird con imágenes de perfil automáticas, añadiendo logotipos de empresas o avatares a correos electrónicos y contactos, y soportando BIMI",
+    "description": "Descripción de la extensión."
+  },
+  "featuresHeader": {
+    "message": "Características",
+    "description": "Encabezado para la sección de características."
+  },
+  "contactsIntegrationLabel": {
+    "message": "Añadir automáticamente una foto de perfil al guardar un contacto",
+    "description": "Etiqueta para la casilla de verificación de integración de contactos."
+  },
+  "inboxListLabel": {
+    "message": "Habilitar imágenes en la lista de la bandeja de entrada (Experimental)",
+    "description": "Etiqueta para la casilla de verificación de la lista de la bandeja de entrada."
+  },
+  "inboxListDescription": {
+    "message": "Habilita esta opción para mostrar fotos de perfil en la lista de la bandeja de entrada.",
+    "description": "Descripción de la característica de la lista de la bandeja de entrada."
+  },
+  "inboxListWarning": {
+    "message": "Advertencia: Esta característica es experimental y puede no funcionar como se espera. Si encuentras algún problema, desactiva esta opción y reporta el problema.",
+    "description": "Mensaje de advertencia para la característica de la lista de la bandeja de entrada."
+  },
+  "inboxListKnownIssues": {
+    "message": "Problemas conocidos:",
+    "description": "Encabezado para la lista de problemas conocidos."
+  },
+  "inboxListIssueLaggyScrolling": {
+    "message": "Desplazamiento lento",
+    "description": "Problema conocido: Desplazamiento lento."
+  },
+  "inboxListIssueVisualFlickering": {
+    "message": "Parpadeo visual (marcadores de posición e iconos)",
+    "description": "Problema conocido: Parpadeo visual."
+  },
+  "inboxListIssueSlowFirstLoad": {
+    "message": "Lento durante la primera carga",
+    "description": "Problema conocido: Lento durante la primera carga."
+  },
+  "inboxListIssueBigFolders": {
+    "message": "Problemas con carpetas grandes",
+    "description": "Problema conocido: Problemas con carpetas grandes."
+  },
+  "cacheHeader": {
+    "message": "Caché",
+    "description": "Encabezado para la sección de caché."
+  },
+  "cacheSizeLabel": {
+    "message": "Tamaño:",
+    "description": "Etiqueta para la visualización del tamaño de la caché."
+  },
+  "clearCacheButton": {
+    "message": "Limpiar caché",
+    "description": "Etiqueta para el botón de limpiar caché."
+  },
+  "cacheCleared": {
+    "message": "Caché limpiada",
+    "description": "Mensaje mostrado cuando se limpia la caché."
+  },
+  "profilePictureNotFound": {
+    "message": "Foto de perfil no encontrada",
+    "description": "Mensaje mostrado cuando no se encuentra la foto de perfil."
+  },
+  "testHeader": {
+    "message": "Verificar una foto de perfil",
+    "description": "Encabezado para la sección de prueba."
+  },
+  "emailInputPlaceholder": {
+    "message": "Correo electrónico que deseas probar",
+    "description": "Marcador de posición para el campo de entrada de correo electrónico."
+  },
+  "fetchButtonLabel": {
+    "message": "Mostrar",
+    "description": "Etiqueta para el botón de obtener."
+  },
+  "noIcons": {
+    "message": "Sin iconos",
+    "description": "Conteo mostrado cuando no hay iconos almacenados en la caché."
+  },
+  "oneIcon": {
+    "message": "1 icono",
+    "description": "Conteo mostrado cuando hay 1 icono almacenado en la caché."
+  },
+  "multipleIcons": {
+    "message": "$NB$ iconos",
+    "description": "Conteo mostrado cuando hay varios iconos almacenados en la caché.",
+    "placeholders": {
+      "NB": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  }
+}

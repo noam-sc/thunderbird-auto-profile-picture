@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title data-l10n-id="extensionName">Auto Profile Picture Extension Settings</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <section id="inbox">
+    <h4 data-l10n-id="featuresHeader">Features</h4>
+    <fieldset>
+      <label>
+        <input name="contactsIntegration" id="contactsIntegration" type="checkbox" role="switch" />
+        <span data-l10n-id="contactsIntegrationLabel">Auto add profile picture when saving a contact</span>
+      </label>
+    </fieldset>
+    <fieldset>
+      <label>
+        <input name="inboxList" id="inboxList" type="checkbox" role="switch" />
+        <span data-l10n-id="inboxListLabel">Enable pictures in inbox list (Experimental)</span>
+      </label>
+    </fieldset>
+    <blockquote>
+      <p data-l10n-id="inboxListDescription">Enable this option to show profile pictures in the inbox list.</p>
+      <p>
+        <span data-l10n-id="inboxListWarning">Warning : This feature is experimental and may not work as expected. If you encounter any issues, please disable this option and report the issue.</span>
+        <br />
+        <span data-l10n-id="inboxListKnownIssues">Known issues are :</span>
+        <ul>
+          <li data-l10n-id="inboxListIssueLaggyScrolling">Laggy scrolling</li>
+          <li data-l10n-id="inboxListIssueVisualFlickering">Visual flickering (placeholders and icons)</li>
+          <li data-l10n-id="inboxListIssueSlowFirstLoad">Slow during the first load</li>
+          <li data-l10n-id="inboxListIssueBigFolders">Struggles with big folders</li>
+        </ul>
+      </p>
+    </blockquote>
+  </section>
+  <section id="cache">
+    <h4 data-l10n-id="cacheHeader">Cache</h4>
+    <div class="grid">
+      <div><span data-l10n-id="cacheSizeLabel">Size :</span> <span id="cacheSize"></span></div>
+      <div><button id="clearCache" data-l10n-id="clearCacheButton">Clear Cache</button></div>
+    </div>
+  </section>
+  <section id="test">
+    <h4 data-l10n-id="testHeader">Check a profile picture</h4>
+    <fieldset role="group">
+      <input name="email" type="email" placeholder="Email you want to test" autocomplete="email" id="email" required data-l10n-attr-placeholder="emailInputPlaceholder" />
+      <button id="fetchButton" data-l10n-id="fetchButtonLabel">Show</button>
+    </fieldset>
+    <article style="display:none" id="profilePicture" aria-busy="false"></article>
+  </section>
+  <script src="options.js" type="module"></script>
+</body>
+
+</html>

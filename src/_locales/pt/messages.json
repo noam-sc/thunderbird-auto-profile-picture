@@ -1,0 +1,100 @@
+{
+  "extensionName": {
+    "message": "Foto de Perfil Automática",
+    "description": "Nome da extensão."
+  },
+  "extensionDescription": {
+    "message": "Melhore sua caixa de entrada do Thunderbird com imagens de perfil automáticas, adicionando logotipos de empresas ou avatares a e-mails e contatos, suportando BIMI",
+    "description": "Descrição da extensão."
+  },
+  "featuresHeader": {
+    "message": "Recursos",
+    "description": "Cabeçalho para a seção de recursos."
+  },
+  "contactsIntegrationLabel": {
+    "message": "Adicionar automaticamente uma foto de perfil ao salvar um contato",
+    "description": "Rótulo para a caixa de seleção de integração de contatos."
+  },
+  "inboxListLabel": {
+    "message": "Ativar imagens na lista de entrada (Experimental)",
+    "description": "Rótulo para a caixa de seleção da lista de entrada."
+  },
+  "inboxListDescription": {
+    "message": "Ative esta opção para mostrar fotos de perfil na lista de entrada.",
+    "description": "Descrição do recurso da lista de entrada."
+  },
+  "inboxListWarning": {
+    "message": "Aviso: Este recurso é experimental e pode não funcionar como esperado. Se você encontrar algum problema, desative esta opção e reporte o problema.",
+    "description": "Mensagem de aviso para o recurso da lista de entrada."
+  },
+  "inboxListKnownIssues": {
+    "message": "Problemas conhecidos:",
+    "description": "Cabeçalho para a lista de problemas conhecidos."
+  },
+  "inboxListIssueLaggyScrolling": {
+    "message": "Rolagem lenta",
+    "description": "Problema conhecido: Rolagem lenta."
+  },
+  "inboxListIssueVisualFlickering": {
+    "message": "Cintilação visual (marcadores de posição e ícones)",
+    "description": "Problema conhecido: Cintilação visual."
+  },
+  "inboxListIssueSlowFirstLoad": {
+    "message": "Lento durante o primeiro carregamento",
+    "description": "Problema conhecido: Lento durante o primeiro carregamento."
+  },
+  "inboxListIssueBigFolders": {
+    "message": "Problemas com pastas grandes",
+    "description": "Problema conhecido: Problemas com pastas grandes."
+  },
+  "cacheHeader": {
+    "message": "Cache",
+    "description": "Cabeçalho para a seção de cache."
+  },
+  "cacheSizeLabel": {
+    "message": "Tamanho:",
+    "description": "Rótulo para a exibição do tamanho do cache."
+  },
+  "clearCacheButton": {
+    "message": "Limpar Cache",
+    "description": "Rótulo para o botão de limpar cache."
+  },
+  "cacheCleared": {
+    "message": "Cache limpa",
+    "description": "Mensagem exibida quando a cache é limpa."
+  },
+  "profilePictureNotFound": {
+    "message": "Foto de perfil não encontrada",
+    "description": "Mensagem exibida quando a foto de perfil não é encontrada."
+  },
+  "testHeader": {
+    "message": "Verificar uma foto de perfil",
+    "description": "Cabeçalho para a seção de teste."
+  },
+  "emailInputPlaceholder": {
+    "message": "E-mail que você deseja testar",
+    "description": "Marcador de posição para o campo de entrada de e-mail."
+  },
+  "fetchButtonLabel": {
+    "message": "Mostrar",
+    "description": "Rótulo para o botão de busca."
+  },
+  "noIcons": {
+    "message": "Sem ícones",
+    "description": "Contagem exibida quando nenhum ícone está armazenado no cache."
+  },
+  "oneIcon": {
+    "message": "1 ícone",
+    "description": "Contagem exibida quando 1 ícone está armazenado no cache."
+  },
+  "multipleIcons": {
+    "message": "$NB$ ícones",
+    "description": "Contagem exibida quando vários ícones estão armazenados no cache.",
+    "placeholders": {
+      "NB": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  }
+}

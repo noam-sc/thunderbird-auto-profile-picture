@@ -1,0 +1,100 @@
+{
+  "extensionName": {
+    "message": "Automatický profilový obrázek",
+    "description": "Název rozšíření."
+  },
+  "extensionDescription": {
+    "message": "Vylepšete svou schránku Thunderbird pomocí automatických profilových obrázků, přidáním firemních log nebo avatarů k e-mailům a kontaktům, s podporou BIMI",
+    "description": "Popis rozšíření."
+  },
+  "featuresHeader": {
+    "message": "Funkce",
+    "description": "Nadpis pro sekci funkcí."
+  },
+  "contactsIntegrationLabel": {
+    "message": "Automaticky přidat profilový obrázek při ukládání kontaktu",
+    "description": "Štítek pro zaškrtávací políčko integrace kontaktů."
+  },
+  "inboxListLabel": {
+    "message": "Povolit obrázky v seznamu doručené pošty (Experimentální)",
+    "description": "Štítek pro zaškrtávací políčko seznamu doručené pošty."
+  },
+  "inboxListDescription": {
+    "message": "Povolte tuto možnost pro zobrazení profilových obrázků v seznamu doručené pošty.",
+    "description": "Popis funkce seznamu doručené pošty."
+  },
+  "inboxListWarning": {
+    "message": "Varování: Tato funkce je experimentální a nemusí fungovat podle očekávání. Pokud narazíte na problémy, deaktivujte tuto možnost a nahlaste problém.",
+    "description": "Varovná zpráva pro funkci seznamu doručené pošty."
+  },
+  "inboxListKnownIssues": {
+    "message": "Známé problémy:",
+    "description": "Nadpis pro seznam známých problémů."
+  },
+  "inboxListIssueLaggyScrolling": {
+    "message": "Zpomalené rolování",
+    "description": "Známý problém: Zpomalené rolování."
+  },
+  "inboxListIssueVisualFlickering": {
+    "message": "Vizuální blikání (zástupné symboly a ikony)",
+    "description": "Známý problém: Vizuální blikání."
+  },
+  "inboxListIssueSlowFirstLoad": {
+    "message": "Pomalé při prvním načtení",
+    "description": "Známý problém: Pomalé při prvním načtení."
+  },
+  "inboxListIssueBigFolders": {
+    "message": "Problémy s velkými složkami",
+    "description": "Známý problém: Problémy s velkými složkami."
+  },
+  "cacheHeader": {
+    "message": "Cache",
+    "description": "Nadpis pro sekci cache."
+  },
+  "cacheSizeLabel": {
+    "message": "Velikost:",
+    "description": "Štítek pro zobrazení velikosti cache."
+  },
+  "clearCacheButton": {
+    "message": "Vymazat cache",
+    "description": "Štítek pro tlačítko vymazání cache."
+  },
+  "cacheCleared": {
+    "message": "Cache vymazána",
+    "description": "Zpráva zobrazená při vymazání cache."
+  },
+  "profilePictureNotFound": {
+    "message": "Profilový obrázek nenalezen",
+    "description": "Zpráva zobrazená, když není nalezen profilový obrázek."
+  },
+  "testHeader": {
+    "message": "Zkontrolovat profilový obrázek",
+    "description": "Nadpis pro sekci testování."
+  },
+  "emailInputPlaceholder": {
+    "message": "E-mail, který chcete otestovat",
+    "description": "Zástupný symbol pro pole pro zadání e-mailu."
+  },
+  "fetchButtonLabel": {
+    "message": "Zobrazit",
+    "description": "Štítek pro tlačítko načtení."
+  },
+  "noIcons": {
+    "message": "Žádné ikony",
+    "description": "Počet zobrazený, když nejsou v mezipaměti uloženy žádné ikony."
+  },
+  "oneIcon": {
+    "message": "1 ikona",
+    "description": "Počet zobrazený, když je v mezipaměti uložena 1 ikona."
+  },
+  "multipleIcons": {
+    "message": "$NB$ ikony",
+    "description": "Počet zobrazený, když je v mezipaměti uloženo více ikon.",
+    "placeholders": {
+      "NB": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  }
+}

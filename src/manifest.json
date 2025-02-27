@@ -1,0 +1,51 @@
+{
+  "manifest_version": 2,
+  "name": "__MSG_extensionName__",
+  "version": "2.0.0",
+  "description": "__MSG_extensionDescription__",
+  "author": "Noam SCHMITT",
+  "homepage_url": "https://astucesweb.fr/projets/auto-profile-picture/",
+  "icons": {
+    "128": "images/icon.svg",
+    "96": "images/icon.svg",
+    "64": "images/icon.svg",
+    "32": "images/icon.svg",
+    "16": "images/icon.svg"
+  },
+  "background": {
+    "scripts": ["background.js"],
+    "type": "module"
+  },
+  "default_locale": "en",
+  "permissions": [
+    "activeTab",
+    "messagesRead",
+    "accountsRead",
+    "tabs",
+    "webRequest",
+    "storage",
+    "addressBooks",
+    "<all_urls>"
+  ],
+  "experiment_apis": {
+    "headerApi": {
+      "schema": "api/headerApi.json",
+      "parent": {
+        "scopes": ["addon_parent"],
+        "paths": [["headerApi"]],
+        "script": "api/headerApi.js"
+      }
+    }
+  },
+  "options_ui": {
+    "open_in_tab": false,
+    "page": "settings/options/index.html"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "autoprofilepicture@astucesweb.fr",
+      "strict_min_version": "112.0",
+      "strict_max_version": "136.*"
+    }
+  }
+}

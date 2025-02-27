@@ -1,0 +1,31 @@
+name: Release Thunderbird add-on
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Install zip
+        uses: montudor/action-zip@v1
+
+      - name: Archive release
+        run: zip -qq -r auto-profile-picture.xpi .
+        working-directory: src
+      
+      - name: Create release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tag="${GITHUB_REF#refs/tags/}"
+
+          gh release create "$tag" \
+            --title="$tag" \
+            --draft \
+            src/auto-profile-picture.xpi
