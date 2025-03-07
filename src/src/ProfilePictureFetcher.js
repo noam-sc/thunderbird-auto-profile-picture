@@ -193,6 +193,7 @@ export default class ProfilePictureFetcher {
       new OnlineStrategy(this, this.provider, this.mail),
       new OnlineStrategy(this, this.webProvider, this.mail),
       this.mail.hasSubDomain() ? new OnlineStrategy(this, this.provider, this.mail.removeSubDomain()) : new VoidStrategy(),
+      this.mail.hasSubDomain() ? new OnlineStrategy(this, this.webProvider, this.mail.removeSubDomain()) : new VoidStrategy()
     ];
     return await this.executeStrategies(strategies);
   }
