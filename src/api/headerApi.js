@@ -242,8 +242,10 @@ async function installOnMessageHeader(window, urls) {
 function installCss(window) {
   let { document } = window;
   const avatarCss = `
-  .recipient-avatar {
+  :root {
     --recipient-avatar-size: 34px;
+  }
+  .recipient-avatar {
     height: var(--recipient-avatar-size);
     width: var(--recipient-avatar-size);
     border-radius: 50%;
@@ -265,6 +267,9 @@ function installCss(window) {
       height: 100%;
       object-fit: cover;
     }
+  }
+  .card-container > .thread-card-column:first-child:not(:has(.recipient-avatar)) {
+    margin-right: calc(var(--recipient-avatar-size) + 4px);
   }
   .correspondentcol-column .recipient-avatar {
       --recipient-avatar-size: 15px;
