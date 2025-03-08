@@ -20,7 +20,7 @@
     "description": "Beschriftung für das Kontrollkästchen der Posteingangsliste."
   },
   "inboxListDescription": {
-    "message": "Aktivieren Sie diese Option, um Profilbilder in der Posteingangsliste anzuzeigen.",
+    "message": "Aktivieren Sie diese Option, um Profilbilder in der Posteingangsliste anzuzeigen. (nur für Thunderbird 121+)",
     "description": "Beschreibung der Funktion der Posteingangsliste."
   },
   "inboxListWarning": {

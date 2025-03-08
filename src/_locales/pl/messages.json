@@ -20,7 +20,7 @@
     "description": "Etykieta dla pola wyboru listy skrzynki odbiorczej."
   },
   "inboxListDescription": {
-    "message": "Włącz tę opcję, aby wyświetlać zdjęcia profilowe na liście skrzynki odbiorczej.",
+    "message": "Włącz tę opcję, aby wyświetlać zdjęcia profilowe na liście skrzynki odbiorczej. (tylko dla Thunderbird 121+)",
     "description": "Opis funkcji listy skrzynki odbiorczej."
   },
   "inboxListWarning": {

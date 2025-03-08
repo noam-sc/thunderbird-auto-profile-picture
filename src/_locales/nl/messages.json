@@ -20,7 +20,7 @@
     "description": "Label voor het selectievakje van de inboxlijst."
   },
   "inboxListDescription": {
-    "message": "Schakel deze optie in om profielfoto's in de inboxlijst weer te geven.",
+    "message": "Schakel deze optie in om profielfoto's in de inboxlijst weer te geven. (alleen voor Thunderbird 121+)",
     "description": "Beschrijving van de functie van de inboxlijst."
   },
   "inboxListWarning": {

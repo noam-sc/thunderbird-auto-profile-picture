@@ -20,7 +20,7 @@
     "description": "Štítek pro zaškrtávací políčko seznamu doručené pošty."
   },
   "inboxListDescription": {
-    "message": "Povolte tuto možnost pro zobrazení profilových obrázků v seznamu doručené pošty.",
+    "message": "Povolte tuto možnost pro zobrazení profilových obrázků v seznamu doručené pošty. (pouze pro Thunderbird 121+)",
     "description": "Popis funkce seznamu doručené pošty."
   },
   "inboxListWarning": {

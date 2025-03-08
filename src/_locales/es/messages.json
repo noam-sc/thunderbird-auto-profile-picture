@@ -20,8 +20,8 @@
     "description": "Etiqueta para la casilla de verificación de la lista de la bandeja de entrada."
   },
   "inboxListDescription": {
-    "message": "Habilita esta opción para mostrar fotos de perfil en la lista de la bandeja de entrada.",
-    "description": "Descripción de la característica de la lista de la bandeja de entrada."
+    "message": "Active esta opción para mostrar las fotos de perfil en la lista de mensajes de la bandeja de entrada. (solo para Thunderbird 121+)",
+    "description": "Descripción de la función de la lista de la bandeja de entrada."
   },
   "inboxListWarning": {
     "message": "Advertencia: Esta característica es experimental y puede no funcionar como se espera. Si encuentras algún problema, desactiva esta opción y reporta el problema.",

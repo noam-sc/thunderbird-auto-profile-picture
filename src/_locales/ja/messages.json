@@ -20,7 +20,7 @@
     "description": "受信トレイリストチェックボックスのラベル。"
   },
   "inboxListDescription": {
-    "message": "このオプションを有効にすると、受信トレイリストにプロフィール画像が表示されます。",
+    "message": "このオプションを有効にすると、受信トレイリストにプロフィール画像が表示されます。（Thunderbird 121+のみ）",
     "description": "受信トレイリスト機能の説明。"
   },
   "inboxListWarning": {

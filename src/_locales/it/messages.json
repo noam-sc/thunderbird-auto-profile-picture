@@ -20,7 +20,7 @@
     "description": "Etichetta per la casella di controllo della lista della posta in arrivo."
   },
   "inboxListDescription": {
-    "message": "Abilita questa opzione per mostrare le foto del profilo nella lista della posta in arrivo.",
+    "message": "Abilita questa opzione per mostrare le foto del profilo nella lista della posta in arrivo. (solo per Thunderbird 121+)",
     "description": "Descrizione della funzionalità della lista della posta in arrivo."
   },
   "inboxListWarning": {

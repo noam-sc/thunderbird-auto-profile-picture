@@ -20,7 +20,7 @@
         "description": "Libellé pour la case à cocher de la liste de la boîte de réception."
     },
     "inboxListDescription": {
-        "message": "Activez cette option pour afficher les photos de profil dans la liste de la boîte de réception.",
+        "message": "Activez cette option pour afficher les photos de profil dans la liste des messages de la boîte de réception. (seulement pour Thunderbird 121+)",
         "description": "Description de la fonctionnalité de la liste de la boîte de réception."
     },
     "inboxListWarning": {

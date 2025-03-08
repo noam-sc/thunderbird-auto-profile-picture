@@ -20,8 +20,8 @@
     "description": "Label for the inbox list checkbox."
   },
   "inboxListDescription": {
-    "message": "Enable this option to show profile pictures in the inbox list.",
-    "description": "Description for the inbox list feature."
+    "message": "Enable this option to display profile pictures in the inbox message list. (only for Thunderbird 121+)",
+    "description": "Description of the inbox list feature."
   },
   "inboxListWarning": {
     "message": "Warning: This feature is experimental and may not work as expected. If you encounter any issues, please disable this option and report the issue.",

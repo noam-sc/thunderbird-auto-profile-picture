@@ -20,7 +20,7 @@
     "description": "Rótulo para a caixa de seleção da lista de entrada."
   },
   "inboxListDescription": {
-    "message": "Ative esta opção para mostrar fotos de perfil na lista de entrada.",
+    "message": "Ative esta opção para mostrar fotos de perfil na lista de entrada. (somente para Thunderbird 121+)",
     "description": "Descrição do recurso da lista de entrada."
   },
   "inboxListWarning": {
