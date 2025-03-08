@@ -6,11 +6,12 @@ import defaultSettings from "../settings/defaultSettings.js";
 export default class Mail {
   /**
    * Creates an instance of Mail.
-   * @param {string} author - The author of the mail.
+   * @param {string} author - The author of the message.
+   * @param {string} mail - The email address of the author.
    */
-  constructor(author) {
+  constructor(author, mail) {
     this.author = author;
-    this.mail = this.parseEmail(author);
+    this.mail = mail;
     this.hasName = author.includes("<");
     this.publicMails = defaultSettings.publicMails;
   }
@@ -20,12 +21,28 @@ export default class Mail {
    * @param {string} author - The author string.
    * @returns {string} - The parsed email address.
    */
-  parseEmail(author) {
+  static async parse(author) {
+    try { // only for Thunderbird 128+
+      const parsed = await browser.messengerUtilities.parseMailboxString(author);
+      if (parsed) {
+        return parsed[0].email;
+      }
+    } catch (error) {}
     const email = author.match(/<(.+)>/);
     if (email) {
       return email[1].toLowerCase().trim();
     }
     return author.toLowerCase().trim();
+  }
+
+  /**
+   * Static factory method that creates a Mail instance from an author string.
+   * @param {string} author - The author of the message.
+   * @returns {Mail} - The Mail instance.
+   */
+  static async fromAuthor(author) {
+    const mail = await Mail.parse(author);
+    return new Mail(author, mail);
   }
 
   /**
@@ -63,7 +80,7 @@ export default class Mail {
    * @returns {Mail} - A new Mail instance with the subdomain removed.
    */
   removeSubDomain() {
-    return new Mail(this.mail.split("@")[0] + "@" + this.getTopDomain());
+    return new Mail(this.author, this.mail.split("@")[0] + "@" + this.getTopDomain());
   }
 
   /**

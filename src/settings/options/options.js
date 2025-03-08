@@ -63,7 +63,7 @@ async function fetchProfilePicture() {
   profilePictureDiv.style.display = "flex";
   profilePictureDiv.innerHTML = "";
 
-  const mail = new Mail(emailInput.value);
+  const mail = await Mail.fromAuthor(emailInput.value);
   const fetcher = new ProfilePictureFetcher(window, mail, "duckduckgo", true);
   const url = await fetcher.getAvatar();
 

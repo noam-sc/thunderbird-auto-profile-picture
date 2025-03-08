@@ -24,7 +24,7 @@ export default class AvatarService {
    */
   async getAvatar(author) {
     if (!this.sessionCacheAvatarUrls[author]) {
-      const mailObject = new Mail(author);
+      const mailObject = await Mail.fromAuthor(author);
       this.sessionCacheAvatarUrls[author] = Status.WAITING;
       const profilePictureFetcher = new ProfilePictureFetcher(window, mailObject);
       this.sessionCacheAvatarUrls[author] = await profilePictureFetcher.getAvatar();

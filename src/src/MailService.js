@@ -18,7 +18,8 @@ class MailService {
   async getUrl(message, context = "inboxList") {
     const author = await this.getCorrespondent(message, context);
     const url = await this.avatarService.getAvatar(author);
-    return { [new Mail(author).getEmail()]: url };
+    const mailObject = await Mail.fromAuthor(author);
+    return { [mailObject.getEmail()]: url };
   }
 
   /**

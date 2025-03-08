@@ -54,7 +54,8 @@ class MessagesService {
 
     let avatarPromises = Array.from(messagesAuthorsSet).map(async (author) => {
       let url = await this.avatarService.getAvatar(author);
-      urls[author] = url || "//INITIAL:" + new Mail(author).getInitial();
+      const mail = await Mail.fromAuthor(author);
+      urls[author] = url || "//INITIAL:" + mail.getInitial();
     });
 
     await Promise.all(avatarPromises);
@@ -73,9 +74,10 @@ class MessagesService {
     let messagesAuthorsSet = await this.getMessagesAuthorsSet(messages);
     let initials = {};
 
-    messagesAuthorsSet.forEach((author) => {
-      initials[author] = "//INITIAL:" + new Mail(author).getInitial();
-    });
+    await Promise.all(Array.from(messagesAuthorsSet).map(async (author) => {
+      const mail = await Mail.fromAuthor(author);
+      initials[author] = "//INITIAL:" + mail.getInitial();
+    }));
 
     return await this.mapMessagesToCorrespondents(messages).then((correspondents) => {
       return correspondents.map((correspondent) => initials[correspondent]);

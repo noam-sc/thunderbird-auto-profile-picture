@@ -22,7 +22,8 @@ class ContactsService {
     const mail = this.mailService.getPrimaryEmail(contactNode);
     if (!mail) return;
 
-    const file = await new ProfilePictureFetcher(window, new Mail(mail)).getAvatar("file");
+    const mailObject = await Mail.fromAuthor(mail);
+    const file = await new ProfilePictureFetcher(window, mailObject).getAvatar("file");
     if (!file) return;
 
     const pngFile = await new ImageConverter(file).convertToPng();
