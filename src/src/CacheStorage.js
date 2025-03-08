@@ -104,10 +104,14 @@ export default class CacheStorage {
    * @param {number} bytes - The size in bytes.
    * @returns {string} - The human-readable size string.
    */
-  convertBytesToSize(bytes) {
+  async convertBytesToSize(bytes) {
     if (bytes === 0 || !bytes) {
       return "empty";
     }
+    try { // only for Thunderbird 128+
+      const cacheSize = await browser.messengerUtilities.formatFileSize(bytes);
+      return cacheSize;
+    } catch (error) {}
     const i = Math.floor(Math.log(bytes) / Math.log(1024));
     return (bytes / Math.pow(1024, i)).toFixed(2) * 1 + " " + ["B", "KB", "MB", "GB", "TB"][i];
   }
@@ -119,7 +123,7 @@ export default class CacheStorage {
   async formattedSize() {
     const sizes = await this.size();
     return {
-      size: this.convertBytesToSize(sizes.bytes),
+      size: await this.convertBytesToSize(sizes.bytes),
       iconsCount: sizes.iconsCount,
     };
   }
