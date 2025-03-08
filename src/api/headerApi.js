@@ -272,12 +272,12 @@ function installCss(window) {
     margin-right: calc(var(--recipient-avatar-size) + 4px);
   }
   .correspondentcol-column .recipient-avatar {
-      --recipient-avatar-size: 15px;
+    --recipient-avatar-size: 15px;
     margin-right: - var(--recipient-avatar-size);
     position: relative;
     left: -20px;
     top: -2px;
-      text-indent:0px;
+    text-indent:0px;
   }
   `;
   if (document.getElementById("auto-profile-picture-style")) {
@@ -549,10 +549,12 @@ const EVENTS_TO_LISTEN = [
   "expanded",
   "showplaceholder",
   "scroll",
-  "change"
+  "change",
+  "drop"
 ];
 const EVENTS_TABLE_TO_LISTEN = [
-  "thread-changed"
+  "thread-changed",
+  "sort-changed"
 ]
 const INITIALS_TIMEOUT = 500;
 const INBOX_LIST_TIMEOUT = 1000;
@@ -605,8 +607,8 @@ async function handleInboxList(window, payload, threadTree, offset) {
 
     if (offset === 0) {
       const eventType = await Promise.race([
-        setupEventListeners(tableThreadTree, EVENTS_TABLE_TO_LISTEN),
-        setupEventListeners(threadTree, eventsToListen),
+        setupEventListeners(tableThreadTree, EVENTS_TABLE_TO_LISTEN, window),
+        setupEventListeners(threadTree, eventsToListen, window),
       ]);
 
       await new Promise((resolve) => window.setTimeout(resolve, 50));
@@ -621,13 +623,31 @@ async function handleInboxList(window, payload, threadTree, offset) {
 }
 
 /**
+ * Checks if all avatars are installed on the thread tree.
+ * 
+ * @param {Object} table - The table or threadTree element.
+ * @returns {boolean} - Returns true if all avatars are installed, otherwise false.
+ */
+function areAvatarsInstalled(table) {
+  let rows = table.querySelectorAll('tr[is="thread-row"], tr[is="thread-card"]');
+  for (let row of rows) {
+    let recipientAvatar = row.querySelector(".recipient-avatar");
+    if (!recipientAvatar) {
+      return false;
+    }
+  }
+  return true;
+}
+
+/**
  * Sets up event listeners on the thread tree.
  *
  * @param {Object} threadTree - The thread tree object.
  * @param {Set} eventsToListen - The set of events to listen for.
+ * @param {Object} window - The window object.
  * @returns {Promise} - A promise that resolves with the event type.
  */
-function setupEventListeners(threadTree, eventsToListen) {
+function setupEventListeners(threadTree, eventsToListen, window) {
   return new Promise((resolve) => {
     const handleEvent = (event) => {
       // console.log("TT resolve", event.type);
@@ -639,19 +659,28 @@ function setupEventListeners(threadTree, eventsToListen) {
       for (const event of eventsToListen) {
         threadTree.removeEventListener(event, handleEvent);
       }
+      observer.disconnect();
     };
 
-    // Observer on the thread tree would be better but it's not working
-    // const observer = new MutationObserver((mutations) => {
-    //   console.log("mutations", mutations);
-    //   for (const mutation of mutations) {
-    //     if (mutation.type === "childList") {
-    //       cleanup();
-    //       resolve("childList");
-    //     }
-    //   }
-    // });
-    // observer.observe(threadTree, { childList: true });
+    const observer = new window.MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        if (mutation.target.classList.contains("recipient-avatar") || 
+            mutation.target.classList.contains("contactInitials") || 
+            (mutation.target.alt && mutation.target.alt.includes("Auto Profile Picture"))) {
+          // mutations caused by the extension
+          continue;
+        }
+        if (mutation.type === "childList" && mutation.removedNodes.length > 0) {
+          cleanup();
+          window.setTimeout(() => {
+            if (!areAvatarsInstalled(threadTree)) {
+              resolve("childList");
+            }
+          }, 300); // WAIT_TIME_MS - 200
+        }
+      }
+    });
+    observer.observe(threadTree, { childList: true, subtree: true, attributes: true });
 
     for (const event of eventsToListen) {
       threadTree.removeEventListener(event, handleEvent);
