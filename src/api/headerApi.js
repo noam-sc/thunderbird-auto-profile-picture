@@ -273,10 +273,10 @@ function installCss(window) {
   }
   .correspondentcol-column .recipient-avatar {
       --recipient-avatar-size: 15px;
-      margin-right: -12px;
-      position:absolute;
-      left: 0;
-      top:1px;
+    margin-right: - var(--recipient-avatar-size);
+    position: relative;
+    left: -20px;
+    top: -2px;
       text-indent:0px;
   }
   `;
