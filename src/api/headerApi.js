@@ -291,6 +291,19 @@ function installCss(window) {
 }
 
 /**
+ * Uninstalls CSS styles for avatars.
+ * 
+ * @param {Object} window - The window object.
+ */
+function uninstallCss(window) {
+  let { document } = window;
+  let style = document.getElementById("auto-profile-picture-style");
+  if (style) {
+    style.remove();
+  }
+}
+
+/**
  * Installs an avatar or initials on a given row element of the inbox list.
  *
  * @param {Document} document - The document object.
@@ -522,7 +535,9 @@ function installInboxList(window, urls, rows, offset, temporary) {
  *
  * @param {Object} window - The window object.
  */
-function uninstall(window) {}
+function uninstall(window) {
+  uninstallCss(window);
+}
 
 let timeoutInitials = null;
 let timeoutInboxList = null;
