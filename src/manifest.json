@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "__MSG_extensionName__",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "__MSG_extensionDescription__",
   "author": "Noam SCHMITT",
   "homepage_url": "https://astucesweb.fr/projets/auto-profile-picture/",

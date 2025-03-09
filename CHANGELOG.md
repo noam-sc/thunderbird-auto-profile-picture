@@ -1,13 +1,24 @@
 ## Roadmap
 
 - Manivest v3 support
+- Externalize the CSS in the API to a separate CSS file and inject it using resource:// URLs
+- Add automatic retry delay after 30 days when no profile picture is found
 
-## 2.0.0
+## 2.1.0 - 2025-03-09
+
+### Changed
+
+- Improve spacing display in the inbox list when no avatars are displayed yet
+- Add web pages favicons on TLD strategy as a fallback
+- Improve display stability in the inbox list
+
+## 2.0.0 - 2025-02-27
 
 ### Added
 
 - Add 12 localizations
 - Support for grouped by sort view (with some performance issues)
+- GitHub repository
 
 ### Changed
 
