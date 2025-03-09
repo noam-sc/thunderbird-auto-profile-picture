@@ -278,13 +278,18 @@ function installCss(window) {
   .card-container > .thread-card-column:first-child:not(:has(.recipient-avatar)) {
     margin-right: calc(var(--recipient-avatar-size) + var(--placeholder-margin));
   }
-  .correspondentcol-column .recipient-avatar {
+  .table-layout {
     --recipient-avatar-size: 15px;
-    margin-right: - var(--recipient-avatar-size);
-    position: relative;
-    left: -20px;
-    top: -2px;
-    text-indent:0px;
+    --top-position: calc(50% - 7.5px);
+  }
+  .table-layout[style="height: 30px;"] {
+    --recipient-avatar-size: 20px;
+    --top-position: calc(50% - 10px);
+  }
+  .correspondentcol-column .recipient-avatar {
+    position: absolute;
+    left: 4.5px;
+    top: var(--top-position);
   }
   `;
   if (document.getElementById("auto-profile-picture-style")) {
