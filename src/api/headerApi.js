@@ -268,8 +268,15 @@ function installCss(window) {
       object-fit: cover;
     }
   }
+  .card-layout {
+    --placeholder-margin: 4px;
+  }
+  /* Compact layout */
+  .card-layout[style="height: 60px;"] {
+    --placeholder-margin: 1px;
+  }
   .card-container > .thread-card-column:first-child:not(:has(.recipient-avatar)) {
-    margin-right: calc(var(--recipient-avatar-size) + 4px);
+    margin-right: calc(var(--recipient-avatar-size) + var(--placeholder-margin));
   }
   .correspondentcol-column .recipient-avatar {
     --recipient-avatar-size: 15px;
