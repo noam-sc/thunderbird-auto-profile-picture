@@ -22,7 +22,6 @@
     "messagesRead",
     "accountsRead",
     "tabs",
-    "webRequest",
     "storage",
     "addressBooks",
     "<all_urls>"
