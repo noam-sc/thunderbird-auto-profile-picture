@@ -33,7 +33,8 @@ const defaultSettings = {
     ],
     notFoundRefreshIntervalMs: 1000 * 3600 * 24 * 30,
     WAIT_TIME_MS: 500,
-    SUBBATCH_SIZE: 15
+    SUBBATCH_SIZE: 15,
+    MAX_REQUEST_SIZE: 100,
 };
 
 export default defaultSettings;
