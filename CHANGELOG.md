@@ -4,6 +4,16 @@
 - Externalize the CSS in the API to a separate CSS file and inject it using resource:// URLs
 - Add automatic retry delay after 30 days when no profile picture is found
 
+## 2.1.1 - 2025-03-31
+
+### Changed
+
+- Add a fetch rate limit to reduce slowdowns when fetching profile pictures
+
+### Removed
+
+- `webRequest` permission (unused)
+
 ## 2.1.0 - 2025-03-09
 
 ### Changed
