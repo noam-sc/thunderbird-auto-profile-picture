@@ -48,19 +48,20 @@ export default class AvatarService {
    * @returns {Promise<string|null>} - The avatar URL or null if request limit exceeded or not found.
    */
   async getAvatar(author) {
-    if (!this.sessionCacheAvatarUrls[author]) {
+    let lcAuthor = author.toLowerCase();
+    if (!this.sessionCacheAvatarUrls[lcAuthor]) {
       if (this.countWaitingAvatars() > defaultSettings.MAX_REQUEST_SIZE) {
         console.warn("Too many requests in progress, skipping avatar fetch for " + author);
         return null;
       }
-      this.sessionCacheAvatarUrls[author] = Status.WAITING;
+      this.sessionCacheAvatarUrls[lcAuthor] = Status.WAITING;
       const mailObject = await Mail.fromAuthor(author);
       const profilePictureFetcher = new ProfilePictureFetcher(window, mailObject);
-      this.sessionCacheAvatarUrls[author] = await profilePictureFetcher.getAvatar();
+      this.sessionCacheAvatarUrls[lcAuthor] = await profilePictureFetcher.getAvatar();
     }
-    while (this.sessionCacheAvatarUrls[author] === Status.WAITING) {
+    while (this.sessionCacheAvatarUrls[lcAuthor] === Status.WAITING) {
       await new Promise((resolve) => setTimeout(resolve, 200));
     }
-    return this.sessionCacheAvatarUrls[author];
+    return this.sessionCacheAvatarUrls[lcAuthor];
   }
 }
