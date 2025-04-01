@@ -53,8 +53,8 @@ export default class AvatarService {
         console.warn("Too many requests in progress, skipping avatar fetch for " + author);
         return null;
       }
-      const mailObject = await Mail.fromAuthor(author);
       this.sessionCacheAvatarUrls[author] = Status.WAITING;
+      const mailObject = await Mail.fromAuthor(author);
       const profilePictureFetcher = new ProfilePictureFetcher(window, mailObject);
       this.sessionCacheAvatarUrls[author] = await profilePictureFetcher.getAvatar();
     }
