@@ -407,6 +407,7 @@ function installOnRow(document, urlOrObj, row, temporary) {
     let threadCardColumn = row.querySelector(".thread-card-column");
     if (threadCardColumn) {
       threadCardColumn.style.display = "flex";
+      threadCardColumn.style.flexDirection = "row";
       threadCardColumn.appendChild(recipientAvatar);
     } else {
       let correspondantColumn = row.querySelector(".correspondentcol-column");
