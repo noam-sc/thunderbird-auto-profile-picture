@@ -4,6 +4,16 @@
 - Externalize the CSS in the API to a separate CSS file and inject it using resource:// URLs
 - Add automatic retry delay after 30 days when no profile picture is found
 
+## 2.2.0 - 2025-05-01
+
+### Changed
+
+- Improve display consistency in the inbox list
+
+### Added
+
+- Initials unique background colors for correspondents without profile pictures
+
 ## 2.1.1 - 2025-03-31
 
 ### Changed
