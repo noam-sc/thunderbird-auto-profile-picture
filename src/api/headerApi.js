@@ -562,7 +562,8 @@ const EVENTS_TO_LISTEN = [
   "showplaceholder",
   "scroll",
   "change",
-  "drop"
+  "drop",
+  "click"
 ];
 const EVENTS_TABLE_TO_LISTEN = [
   "thread-changed",
@@ -603,27 +604,15 @@ function handleInitials(window, payload, rows, offset) {
 async function handleInboxList(window, payload, threadTree, offset) {
   window.clearTimeout(window.timeoutInboxList);
 
-  const eventsToListen = new Set(EVENTS_TO_LISTEN);
-  if (threadTree._rows.length === payload.length) {
-    eventsToListen.delete("scroll");
-  }
-
-  let tableThreadTree = threadTree.getElementsByTagName("table")[0];
-
   try {
     window.timeoutInboxList = window.setTimeout(() => {
-      // console.log("setTimeout installInboxList call");
       installInboxList(window, payload, threadTree._rows, offset, false);
     }, INBOX_LIST_TIMEOUT);
     installInboxList(window, payload, threadTree._rows, offset, false);
 
-    if (offset === 0) {
-      const eventType = await Promise.race([
-        setupEventListeners(tableThreadTree, EVENTS_TABLE_TO_LISTEN, window),
-        setupEventListeners(threadTree, eventsToListen, window),
-      ]);
-
-      await new Promise((resolve) => window.setTimeout(resolve, 50));
+    if (offset < 15) {
+      const eventType = await initializeAllEventListeners(threadTree, payload.length, window);
+      await new Promise((resolve) => window.setTimeout(resolve, 100));
       return { status: "needReprint", eventType: eventType };
     } else {
       return { status: "success" };
@@ -632,6 +621,27 @@ async function handleInboxList(window, payload, threadTree, offset) {
     console.error(e);
     return { status: "failed", error: e };
   }
+}
+
+/**
+ * Initializes event listeners on the thread tree.
+ * 
+ * @param {Object} threadTree - The thread tree object.
+ * @param {number} payloadLength - The length of the payload.
+ * @param {Object} window - The window object.
+ * @return {Promise} - A promise that resolves with the event type.
+ */
+async function initializeAllEventListeners(threadTree, payloadLength, window) {
+  const eventsToListen = new Set(EVENTS_TO_LISTEN);
+  if (threadTree._rows.length === payloadLength) {
+    eventsToListen.delete("scroll");
+  }
+  let tableThreadTree = threadTree.getElementsByTagName("table")[0];
+  const eventType = await Promise.race([
+    setupEventListeners(tableThreadTree, EVENTS_TABLE_TO_LISTEN, window),
+    setupEventListeners(threadTree, eventsToListen, window),
+  ]);
+  return eventType;
 }
 
 /**
@@ -779,8 +789,6 @@ var headerApi = class extends ExtensionCommon.ExtensionAPI {
           const window = getContentWindow(nativeTab);
           const threadTree = window.threadTree;
 
-          // console.log("pictureInboxList", offset, initials);
-
           installCss(window);
 
           if (initials) {
@@ -813,6 +821,19 @@ var headerApi = class extends ExtensionCommon.ExtensionAPI {
           const msgNb = await getTotalMessagesView(window);
           return msgNb;
         },
+
+        /**
+         * Installs event listeners on the inbox list.
+         * 
+         * @param {number} tabId - The tab ID.
+         */
+        async installEventListeners(tabId) {
+          let { nativeTab } = context.extension.tabManager.get(tabId);
+          let window = getContentWindow(nativeTab);
+          let threadTree = window.threadTree;
+          const eventType = await initializeAllEventListeners(threadTree, 0, window);
+          return eventType;
+        }
       },
     };
   }

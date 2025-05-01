@@ -122,7 +122,7 @@ class MessagesService {
       if (result.eventType === "scroll") {
         this.lastDisplayInboxListCall -= this.WAIT_TIME_MS / 2;
       }
-      await this.displayInboxList();
+      await this.displayInboxList(null, true);
     }
   }
 
@@ -250,17 +250,7 @@ class MessagesService {
    * @returns {Promise<{currentMessages: Object, tabId: number, firstDisplayedMessageId: number}>} - The messages and tab ID.
    */
   async getMessagesAndTabId(tab) {
-    let tabId = 1;
-    if (!tab) {
-      const mailTabs = await browser.tabs.query({ mailTab: true });
-      if (mailTabs.length > 0) {
-        tabId = mailTabs[0].id;
-      }
-    } else if (tab.type !== "mail") {
-      throw new Error("Not a mail tab");
-    } else {
-      tabId = tab.id;
-    }
+    let tabId = await this.getMailTabId(tab);
 
     const currentMessages = await browser.mailTabs.getListedMessages(tabId);
     const firstDisplayedMessageId =
@@ -270,11 +260,50 @@ class MessagesService {
   }
 
   /**
+   * Retrieves the mail tab ID.
+   * @param {Object} tab - The tab object.
+   * @returns {Promise<number>} - The mail tab ID.
+   * @throws {Error} - If the tab is not a mail tab.
+   */
+  async getMailTabId(tab) {
+    let tabId = 1;
+    if (!tab) {
+      const mailTabs = await browser.tabs.query({ mailTab: true });
+      if (mailTabs.length > 0) {
+        tabId = mailTabs[0].id;
+      }
+    } else if (tab.type !== "mail") {
+      throw new Error("Not a mail tab " + tab.type);
+    } else {
+      tabId = tab.id;
+    }
+    return tabId;
+  }
+
+  /**
+   * Installs DOM listeners for the given tab ID.
+   * @param {number} tabId - The tab ID.
+   * @returns {Promise<void>}
+   */
+  async installDOMlistener(tabId) {
+    const eventType = await browser.headerApi.installEventListeners(tabId);
+    if (eventType === "scroll") {
+      this.lastDisplayInboxListCall -= this.WAIT_TIME_MS / 2;
+    }
+    await this.displayInboxList(null, true);
+  }
+
+  /**
    * Displays avatars on the inbox list.
    * @param {Object} tab - The tab object.
+   * @param {boolean} triggeredFromDOMEvent - Indicates if the call was triggered from a DOM event.
    */
-  async displayInboxList(tab) {
+  async displayInboxList(tab, triggeredFromDOMEvent = false) {
     if (!this.canDisplayInboxList()) {
+      if (triggeredFromDOMEvent) {
+        const tabId = await this.getMailTabId(tab);
+        this.installDOMlistener(tabId);
+      }
       return;
     }
     this.updateLastDisplayInboxListCall();
