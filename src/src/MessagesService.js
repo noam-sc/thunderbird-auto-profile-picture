@@ -1,5 +1,6 @@
 import Mail from "./Mail.js";
 import defaultSettings from "../settings/defaultSettings.js";
+import RecipientColor from "./RecipientColor.js";
 
 /**
  * Service for handling messages and their associated avatars.
@@ -44,6 +45,19 @@ class MessagesService {
   }
 
   /**
+   * Builds initials for the given mail and author.
+   * @param {Object} mail - The mail object.
+   * @param {string} author - The author string.
+   * @returns {Object} - The initials object.
+   */
+  buildInitials(mail, author) {
+    return {
+      value: "//INITIAL:" + mail.getInitial(),
+      color: RecipientColor.getColor(mail.mail || author)
+    };
+  }
+
+  /**
    * Fetches avatars for the given messages.
    * @param {Array} messages - The list of messages.
    * @returns {Promise<Array>} - The list of avatar URLs.
@@ -55,7 +69,7 @@ class MessagesService {
     let avatarPromises = Array.from(messagesAuthorsSet).map(async (author) => {
       let url = await this.avatarService.getAvatar(author);
       const mail = await Mail.fromAuthor(author);
-      urls[author] = url || "//INITIAL:" + mail.getInitial();
+      urls[author] = url || this.buildInitials(mail, author);
     });
 
     await Promise.all(avatarPromises);
@@ -76,7 +90,7 @@ class MessagesService {
 
     await Promise.all(Array.from(messagesAuthorsSet).map(async (author) => {
       const mail = await Mail.fromAuthor(author);
-      initials[author] = "//INITIAL:" + mail.getInitial();
+      initials[author] = this.buildInitials(mail, author);
     }));
 
     return await this.mapMessagesToCorrespondents(messages).then((correspondents) => {

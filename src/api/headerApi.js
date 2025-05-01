@@ -319,12 +319,12 @@ function uninstallCss(window) {
  * Installs an avatar or initials on a given row element of the inbox list.
  *
  * @param {Document} document - The document object.
- * @param {string} url - The URL of the avatar image or a string starting with "//INITIAL:" followed by initials.
+ * @param {string|Object} urlOrObj - The URL of the avatar image or an object with value and color for initials.
  * @param {HTMLElement} row - The row element where the avatar or initials will be installed.
  * @param {boolean} temporary - A flag indicating whether the avatar is temporary.
  * @returns {boolean} - Returns true if the avatar or initials were successfully installed, otherwise false.
  */
-function installOnRow(document, url, row, temporary) {
+function installOnRow(document, urlOrObj, row, temporary) {
   let recipientAvatar = row.querySelector(".recipient-avatar");
   const hasNoAvatar = !recipientAvatar;
   if (hasNoAvatar) {
@@ -339,18 +339,32 @@ function installOnRow(document, url, row, temporary) {
     img.alt = "Auto Profile Picture";
     img.setAttribute("xmlns", "http://www.w3.org/1999/xhtml");
     recipientAvatar.appendChild(img);
-  } else if (img.src === url) {
+  } else if (typeof urlOrObj === "string" && img.src === urlOrObj) {
+    // Image already installed and correct
     return false;
   }
+
   let contactInitials = recipientAvatar.querySelector(".contactInitials");
+
+  let url = urlOrObj;
+  let initialsColor = null;
+  if (typeof urlOrObj === "object" && urlOrObj !== null && urlOrObj.value) {
+    url = urlOrObj.value;
+    initialsColor = urlOrObj.color;
+  }
+
   if (url && url !== "" && !url.includes("//INITIAL:")) {
+    // Valid image URL
     recipientAvatar.classList.add("has-avatar");
     recipientAvatar.classList.remove("no-avatar");
     img.src = url;
     if (contactInitials) {
+      // Remove initials if they exist
       recipientAvatar.removeChild(contactInitials);
+      recipientAvatar.style.background = null;
     }
   } else if (url && url.includes("//INITIAL:") && (hasNoImg || !temporary)) {
+    // Valid initials without image or not temporary (ie. no image has been found)
     recipientAvatar.classList.add("no-avatar");
     recipientAvatar.classList.remove("has-avatar");
     if (!contactInitials) {
@@ -360,6 +374,9 @@ function installOnRow(document, url, row, temporary) {
       recipientAvatar.appendChild(contactInitials);
     }
     recipientAvatar.removeChild(img);
+    if (initialsColor) {
+      recipientAvatar.style.background = initialsColor;
+    }
     if (contactInitials.innerHTML === url.replace("//INITIAL:", "")) {
       return false;
     }
