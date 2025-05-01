@@ -290,6 +290,7 @@ function installCss(window) {
     vertical-align: middle;
     margin-inline-end: 1px;
     color: light-dark(#71717a, #a1a1aa);
+    margin-top: 1px;
   }
   .recipient-avatar.no-avatar {
     background-color: light-dark(#d4d4d8, #52525b);

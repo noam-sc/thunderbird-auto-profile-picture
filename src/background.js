@@ -129,7 +129,7 @@ function initListeners() {
   messenger.contacts.onCreated.addListener(onContactCreated);
 
   browser.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
-    if (tab.status === "complete" && tab.type === "special") {
+    if (tab.status === "complete" && tab.type === "special") { // Thunderbird Conversations tab
       let result = await browser.headerApi.pictureHeaders(tabId, "{}");
       if (result.status === "needData") {
         handleNeedData(tab, result);
