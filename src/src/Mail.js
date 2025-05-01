@@ -127,6 +127,8 @@ export default class Mail {
     if (this.hasName) {
       const authorLetters = this.author.replace(/[^a-zA-Z]/g, "");
       return authorLetters[0].toUpperCase();
+    } else if (this.isPublic()) {
+      return this.author[0].toUpperCase();
     } else {
       const domain = this.getDomain();
       if (domain === "") {

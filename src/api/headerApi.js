@@ -202,21 +202,36 @@ async function installConversation(window, payload) {
  */
 async function installOnMessageHeader(window, urls) {
   let { document } = window;
+  let urlOrObj = Object.values(urls)[0];
 
-  let url = Object.values(urls)[0];
+  let url = urlOrObj;
+  let initialsColor = null;
+  if (typeof urlOrObj === "object" && urlOrObj !== null && urlOrObj.value) {
+    url = urlOrObj.value;
+    initialsColor = urlOrObj.color;
+  }
 
   let recipientAvatar = document.querySelector(".recipient-avatar");
   if (recipientAvatar) {
     if (!recipientAvatar.classList.contains("has-avatar")) {
       if (!url || url === "" || url.includes("//INITIAL:")) {
-        if (url?.includes("//INITIAL:")) {
-          let contactInitials = document.createElement("span");
+        if (url && url.includes("//INITIAL:")) {
+          let contactInitials = document.getElementsByTagName("span");
+          if (contactInitials.length > 0) {
+            contactInitials = contactInitials[0];
+          } else {
+            contactInitials = document.createElement("span");
+          }
           contactInitials.classList.add("contactInitials");
           contactInitials.classList.add("auto-profile-picture");
-          contactInitials.innerHTML = url.replace("//INITIAL:", "");
+          if (contactInitials.innerHTML != url.replace("//INITIAL:", "")) {
+            contactInitials.innerHTML = url.replace("//INITIAL:", "");
+          }
+          if (initialsColor) {
+            recipientAvatar.style.background = initialsColor;
+          }
           recipientAvatar.appendChild(contactInitials);
         }
-
         return {
           status: "failed",
           error: "No URL found",
@@ -229,9 +244,9 @@ async function installOnMessageHeader(window, urls) {
       img.src = url;
       img.setAttribute("xmlns", "http://www.w3.org/1999/xhtml");
       img.setAttribute("data-l10n-id", "message-header-recipient-avatar");
-
       recipientAvatar.appendChild(img);
       recipientAvatar.classList.add("has-avatar");
+      recipientAvatar.style.background = null;
     }
     return {
       status: "success",
