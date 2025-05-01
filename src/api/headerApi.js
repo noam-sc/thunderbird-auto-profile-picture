@@ -56,8 +56,20 @@ function getContentWindow(nativeTab) {
 async function extractMailsThunderbirdConversation(window) {
   let { document } = window;
   const popupContainer = document.getElementById("popup-container");
-  const popups = popupContainer.querySelectorAll(".fade-popup");
+  let popups = popupContainer.childNodes;
 
+  let retryCount = 0;
+  while (popups.length === 0 && retryCount < 20) {
+    console.warn("Waiting for popups to load...");
+    await new Promise((resolve) => window.setTimeout(resolve, 200));
+    popups = popupContainer.childNodes;
+    retryCount++;
+  }
+
+  if (popups.length === 0) {
+    console.error("No popups found in the popup container.");
+    return null;
+  }
 
   /**
    * Extracts the email address from a popup.
@@ -105,6 +117,9 @@ async function extractMailsThunderbirdConversation(window) {
  */
 async function installConversation(window, payload) {
   function insertPictureInPopup(popup, url) {
+    if (!url || url === "") {
+      return;
+    }
     const avatar = popup.querySelector(".authorPicture");
     if (avatar) {
       avatar.innerHTML = `<img src="${url}" alt="Auto Profile Picture">`;
@@ -112,6 +127,9 @@ async function installConversation(window, payload) {
   }
 
   function replaceAuthorPictureInMessage(message, url) {
+    if (!url || url === "") {
+      return;
+    }
     let contactInitials = message.querySelector(".contactInitials");
     if (contactInitials) {
       let contactAvatar = document.createElement("span");
