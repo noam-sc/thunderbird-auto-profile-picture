@@ -8,11 +8,17 @@
 
 ### Changed
 
+- Minor email list speedup
 - Improve display consistency in the inbox list
 
 ### Added
 
 - Initials unique background colors for correspondents without profile pictures
+
+### Fixed
+
+- Compatibility with Thunderbird Conversations extension
+- Layout change for TB 139
 
 ## 2.1.1 - 2025-03-31
 
