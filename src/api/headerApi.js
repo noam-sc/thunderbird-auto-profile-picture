@@ -132,12 +132,11 @@ async function installConversation(window, payload) {
     }
     let contactInitials = message.querySelector(".contactInitials");
     if (contactInitials) {
-      let contactAvatar = document.createElement("span");
-      contactAvatar.classList.add("contactAvatar");
-      contactAvatar.classList.add("auto-profile-picture");
-      contactAvatar.style.backgroundImage = `url("${url}")`;
-      contactAvatar.innerHTML = "&nbsp;";
-      contactInitials.replaceWith(contactAvatar);
+      contactInitials.classList.remove("contactInitials");
+      contactInitials.classList.add("contactAvatar");
+      contactInitials.classList.add("auto-profile-picture");
+      contactInitials.style.backgroundImage = `url("${url}")`;
+      contactInitials.innerHTML = "&nbsp;";
     } else {
       let autoProfilePicture = message.querySelector(".auto-profile-picture");
       if (autoProfilePicture) {
