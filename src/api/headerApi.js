@@ -118,16 +118,27 @@ async function extractMailsThunderbirdConversation(window) {
 async function installConversation(window, payload) {
   function insertPictureInPopup(popup, url) {
     if (!url || url === "") {
+      let wrongAvatar = popup.querySelector(".autoprofilepictureimg");
+      if (wrongAvatar) {
+        wrongAvatar.classList.remove("autoprofilepictureimg");
+        wrongAvatar.src = "chrome://messenger/skin/addressbook/icons/contact-generic.svg";
+      }
       return;
     }
     const avatar = popup.querySelector(".authorPicture");
     if (avatar) {
-      avatar.innerHTML = `<img src="${url}" alt="Auto Profile Picture">`;
+      avatar.innerHTML = `<img src="${url}" class="autoprofilepictureimg" alt="Auto Profile Picture">`;
     }
   }
 
   function replaceAuthorPictureInMessage(message, url) {
     if (!url || url === "") {
+      let wrongInitials = message.querySelector("abbr.auto-profile-picture");
+      if (wrongInitials) {
+        wrongInitials.classList.remove("auto-profile-picture");
+        wrongInitials.classList.add("contactInitials");
+        wrongInitials.style.backgroundImage = null;
+      }
       return;
     }
     let contactInitials = message.querySelector(".contactInitials");
@@ -141,6 +152,7 @@ async function installConversation(window, payload) {
       let autoProfilePicture = message.querySelector(".auto-profile-picture");
       if (autoProfilePicture) {
         autoProfilePicture.style.backgroundImage = `url("${url}")`;
+        autoProfilePicture.innerHTML = "&nbsp;";
       } else {
         console.error("No contactInitials or auto-profile-picture found");
       }
