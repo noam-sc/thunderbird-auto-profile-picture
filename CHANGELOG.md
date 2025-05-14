@@ -4,6 +4,12 @@
 - Externalize the CSS in the API to a separate CSS file and inject it using resource:// URLs
 - Add automatic retry delay after 30 days when no profile picture is found
 
+## 2.2.2 - 2025-05-14
+
+### Fixed
+
+- Fix compatibility with Compact Headers extension
+
 ## 2.2.1 - 2025-05-03
 
 ### Fixed
