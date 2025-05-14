@@ -222,12 +222,13 @@ async function installOnMessageHeader(window, urls) {
     initialsColor = urlOrObj.color;
   }
 
-  let recipientAvatar = document.querySelector(".recipient-avatar");
-  if (recipientAvatar) {
+  let recipientAvatars = document.querySelectorAll(".recipient-avatar");
+  let result = { status: "failed", error: "No URL found" };
+  recipientAvatars.forEach((recipientAvatar) => {
     if (!recipientAvatar.classList.contains("has-avatar")) {
       if (!url || url === "" || url.includes("//INITIAL:")) {
         if (url && url.includes("//INITIAL:")) {
-          let contactInitials = document.getElementsByTagName("span");
+          let contactInitials = recipientAvatar.getElementsByTagName("span");
           if (contactInitials.length > 0) {
             contactInitials = contactInitials[0];
           } else {
@@ -243,10 +244,8 @@ async function installOnMessageHeader(window, urls) {
           }
           recipientAvatar.appendChild(contactInitials);
         }
-        return {
-          status: "failed",
-          error: "No URL found",
-        };
+        result = { status: "failed", error: "No URL found" };
+        return;
       }
       if (recipientAvatar.firstChild) {
         recipientAvatar.removeChild(recipientAvatar.firstChild);
@@ -258,10 +257,13 @@ async function installOnMessageHeader(window, urls) {
       recipientAvatar.appendChild(img);
       recipientAvatar.classList.add("has-avatar");
       recipientAvatar.style.background = null;
+      result = { status: "success" };
+    } else {
+      result = { status: "success" };
     }
-    return {
-      status: "success",
-    };
+  });
+  if (recipientAvatars.length > 0) {
+    return result;
   }
 
   let popupContainer = document.getElementById("popup-container");
