@@ -19,7 +19,7 @@ export default class Mail {
   /**
    * Parses the email address from the author string.
    * @param {string} author - The author string.
-   * @returns {string} - The parsed email address.
+   * @returns {Promise<string|null>} - The parsed email address.
    */
   static async parse(author) {
     try { // only for Thunderbird 128+
@@ -32,16 +32,20 @@ export default class Mail {
     if (email) {
       return email[1].toLowerCase().trim();
     }
-    return author.toLowerCase().trim();
+    return null;
+    // return author.toLowerCase().trim();
   }
 
   /**
    * Static factory method that creates a Mail instance from an author string.
    * @param {string} author - The author of the message.
-   * @returns {Mail} - The Mail instance.
+   * @returns {Promise<Mail|null>} - The Mail instance, or null if parsing fails.
    */
   static async fromAuthor(author) {
     const mail = await Mail.parse(author);
+    if (!mail) {
+      return null;
+    }
     return new Mail(author, mail);
   }
 

@@ -102,7 +102,7 @@ export default class CacheStorage {
   /**
    * Converts bytes to a human-readable size string.
    * @param {number} bytes - The size in bytes.
-   * @returns {string} - The human-readable size string.
+   * @returns {Promise<string>} - The human-readable size string.
    */
   async convertBytesToSize(bytes) {
     if (bytes === 0 || !bytes) {
@@ -113,7 +113,7 @@ export default class CacheStorage {
       return cacheSize;
     } catch (error) {}
     const i = Math.floor(Math.log(bytes) / Math.log(1024));
-    return (bytes / Math.pow(1024, i)).toFixed(2) * 1 + " " + ["B", "KB", "MB", "GB", "TB"][i];
+    return (bytes / Math.pow(1024, i)).toFixed(2) + " " + ["B", "KB", "MB", "GB", "TB"][i];
   }
 
   /**

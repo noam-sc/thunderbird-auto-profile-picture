@@ -1,4 +1,4 @@
-import { AvatarStrategy } from "./AvatarStrategy.js";
+import { AvatarStrategy, Status } from "./AvatarStrategy.js";
 
 export class VoidStrategy extends AvatarStrategy {
   constructor() {
@@ -6,6 +6,6 @@ export class VoidStrategy extends AvatarStrategy {
   }
 
   async fetchAvatar() {
-    return null;
+    return Status.NO_RESULT;
   }
 }

@@ -1,4 +1,4 @@
-import { AvatarStrategy } from "./AvatarStrategy.js";
+import { AvatarStrategy, Status } from "./AvatarStrategy.js";
 
 export class ContactsStrategy extends AvatarStrategy {
   constructor(fetcher, mail) {
@@ -11,6 +11,7 @@ export class ContactsStrategy extends AvatarStrategy {
       const contacts = await messenger.contacts.quickSearch(this.mail.getEmail());
       if (contacts.length > 0) {
         const contact = contacts[0];
+        /** @type {Blob} */
         const photo = await messenger.contacts.getPhoto(contact.id);
         if (photo) {
           return photo;
@@ -19,6 +20,6 @@ export class ContactsStrategy extends AvatarStrategy {
     } catch (error) {
       console.error("Error fetching avatar from contacts", error);
     }
-    return null;
+    return Status.NO_RESULT;
   }
 }

@@ -23,8 +23,9 @@ class ContactsService {
     if (!mail) return;
 
     const mailObject = await Mail.fromAuthor(mail);
-    const file = await new ProfilePictureFetcher(window, mailObject).getAvatar("file");
-    if (!file) return;
+    if (!mailObject) return;
+    const file = await new ProfilePictureFetcher(window, mailObject).getAvatarAsFile();
+    if (!(file instanceof File)) return;
 
     const pngFile = await new ImageConverter(file).convertToPng();
     messenger.contacts.setPhoto(contactNode.id, pngFile);

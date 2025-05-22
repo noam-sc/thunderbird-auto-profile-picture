@@ -77,7 +77,9 @@ class MessagesService {
 
     await Promise.all(Array.from(messagesAuthorsSet).map(async (author) => {
       const mail = await Mail.fromAuthor(author);
-      initials[author] = RecipientInitial.buildInitials(mail, author);
+      if (mail) {
+        initials[author] = RecipientInitial.buildInitials(mail, author);
+      }
     }));
 
     return await this.mapMessagesToCorrespondents(messages).then((correspondents) => {
