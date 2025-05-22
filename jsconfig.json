@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "checkJs": true,
+    "baseUrl": ".",
+    "paths": {
+      "*": ["src/types/*", "*"]
+    },
+    "lib": ["es2022", "dom"]
+  },
+  "include": [
+    "src/**/*.js",
+    "src/types/**/*.d.ts"
+  ]
+}
