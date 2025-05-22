@@ -11,7 +11,7 @@
 const defaultSettings = {
     inboxListEnabled: true,
     contactsIntegrationEnabled: true,
-    publicMails: [
+    publicMails: new Set([
         "gmail",
         "yahoo",
         "hotmail",
@@ -30,7 +30,7 @@ const defaultSettings = {
         "live",
         "msn",
         "yandex"
-    ],
+    ]),
     notFoundRefreshIntervalMs: 1000 * 3600 * 24 * 30,
     WAIT_TIME_MS: 500,
     SUBBATCH_SIZE: 15,

@@ -100,7 +100,7 @@ export default class Mail {
    * @returns {boolean} - True if the email address is public, false otherwise.
    */
   isPublic() {
-    return this.publicMails.includes(this.getDomainWithoutTld()) || this.publicMails.includes(this.getTopDomain());
+    return this.publicMails.has(this.getDomainWithoutTld()) || this.publicMails.has(this.getTopDomain());
   }
 
   /**
