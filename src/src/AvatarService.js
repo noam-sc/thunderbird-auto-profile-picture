@@ -34,7 +34,7 @@ export default class AvatarService {
 
   /**
    * Retrieves the avatar URL for the given author.
-   * 
+   *
    * Steps:
    * 1. Check if the avatar URL is already in the session cache
    * 2. If not in cache:
@@ -43,7 +43,7 @@ export default class AvatarService {
    *    c. Fetch and store the avatar URL in the cache
    * 3. If the avatar is marked as waiting, poll until it's ready
    * 4. Return the cached avatar URL
-   * 
+   *
    * @param {string} author - The email address of the author.
    * @returns {Promise<string|null>} - The avatar URL or null if request limit exceeded or not found.
    */
@@ -56,8 +56,11 @@ export default class AvatarService {
       }
       this.sessionCacheAvatarUrls[lcAuthor] = Status.WAITING;
       const mailObject = await Mail.fromAuthor(author);
+      if (!mailObject) {
+        return null;
+      }
       const profilePictureFetcher = new ProfilePictureFetcher(window, mailObject);
-      this.sessionCacheAvatarUrls[lcAuthor] = await profilePictureFetcher.getAvatar();
+      this.sessionCacheAvatarUrls[lcAuthor] = await profilePictureFetcher.getAvatarAsURL();
     }
     while (this.sessionCacheAvatarUrls[lcAuthor] === Status.WAITING) {
       await new Promise((resolve) => setTimeout(resolve, 200));

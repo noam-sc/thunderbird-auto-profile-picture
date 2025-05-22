@@ -1,4 +1,4 @@
-import { AvatarStrategy } from "./AvatarStrategy.js";
+import { AvatarStrategy, Status } from "./AvatarStrategy.js";
 import Provider, { Scope } from "../../providers/Provider.js";
 import Mail from "../Mail.js";
 import ProfilePictureFetcher from "../ProfilePictureFetcher.js";
@@ -13,6 +13,8 @@ export class OnlineStrategy extends AvatarStrategy {
      */
     constructor(fetcher, provider, mail) {
         super(fetcher);
+        /** @type {ProfilePictureFetcher} */
+        this.fetcher;
         this.strategyName = provider.name;
         this.provider = provider;
         this.mail = mail;
@@ -25,15 +27,18 @@ export class OnlineStrategy extends AvatarStrategy {
             this.urlPromise = this.provider.getUrl(this.mail);
             const url = await this.urlPromise;
             if (url) {
-                return await this.fetcher.downloadImage(
+                const blob = await this.fetcher.downloadImage(
                     url,
                     this.domain,
                     this.strategyName
                 );
+                if (blob) {
+                    return blob;
+                }
             }
         } catch (error) {
             console.warn(`Error while downloading ${this.strategyName}`, error, this.urlPromise);
         }
-        return null;
+        return Status.NO_RESULT;
     }
 }

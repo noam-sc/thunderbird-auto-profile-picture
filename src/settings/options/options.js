@@ -64,14 +64,18 @@ async function fetchProfilePicture() {
   profilePictureDiv.innerHTML = "";
 
   const mail = await Mail.fromAuthor(emailInput.value);
-  const fetcher = new ProfilePictureFetcher(window, mail, "duckduckgo", true);
-  const url = await fetcher.getAvatar();
-
-  if (!url) {
-    profilePictureDiv.innerHTML = browser.i18n.getMessage("profilePictureNotFound");
-  } else {
-    profilePictureDiv.innerHTML = `<img src="${url}" width="100" height="100">`;
+  if (mail) {
+    const fetcher = new ProfilePictureFetcher(window, mail, "duckduckgo", true);
+    const url = await fetcher.getAvatarAsURL();
+    if (url) {
+      profilePictureDiv.innerHTML = `<img src="${url}" width="100" height="100">`;
+    }
   }
+
+  if (!profilePictureDiv.innerHTML) {
+    profilePictureDiv.innerHTML = browser.i18n.getMessage("profilePictureNotFound");
+  }
+
   fetchButton.disabled = false;
   profilePictureDiv.removeAttribute("aria-busy");
 }
