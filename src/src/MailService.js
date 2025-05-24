@@ -43,6 +43,13 @@ class MailService {
       }
       return message.author;
     }
+
+    if (message.author.match(/@duck\.com$/)) {
+      const match = message.author.match(/^(.+)_at_(.+?)_.+@duck\.com$/);
+      if (match) {
+        return `${match[1]}@${match[2]}`;
+      }
+    }
     return message.author;
   }
 
