@@ -2,3 +2,4 @@
 /public/
 *.png
 pico.css
+node_modules/
