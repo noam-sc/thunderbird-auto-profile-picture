@@ -20,6 +20,7 @@ export default class ProfilePictureFetcher {
     this.mail = mailObject;
     this.provider = ProviderFactory.createProvider(providerName, wdow);
     this.gravatarProvider = ProviderFactory.createProvider("gravatar", wdow);
+    this.libravatarProvider = ProviderFactory.createProvider("libravatar", wdow);
     this.bimiProvider = ProviderFactory.createProvider("bimi", wdow);
     this.webProvider = ProviderFactory.createProvider("favicon_webpage", wdow);
     this.providerName = providerName;
@@ -110,7 +111,7 @@ export default class ProfilePictureFetcher {
 
       if (blob.type.includes("text/plain")) {
         const string = await blob.text();
-        if (string.includes("svg")) { 
+        if (string.includes("svg")) {
           // wrong header returned by the server : text/plain instead of image/svg+xml
           // happens with noreply@recruiting.facebook.com for instance
           blob = new Blob([string], { type: "image/svg+xml" });
@@ -190,6 +191,7 @@ export default class ProfilePictureFetcher {
       this.mail.hasSubDomain() ? new CacheStrategy(this, topDomain) : new VoidStrategy(),
       this.mail.hasSubDomain() ? new OnlineStrategy(this, this.bimiProvider, this.mail.removeSubDomain()) : new VoidStrategy(),
       new OnlineStrategy(this, this.gravatarProvider, this.mail),
+      new OnlineStrategy(this, this.libravatarProvider, this.mail),
       new OnlineStrategy(this, this.provider, this.mail),
       new OnlineStrategy(this, this.webProvider, this.mail),
       this.mail.hasSubDomain() ? new OnlineStrategy(this, this.provider, this.mail.removeSubDomain()) : new VoidStrategy(),
@@ -206,7 +208,8 @@ export default class ProfilePictureFetcher {
     const strategies = [
       new ContactsStrategy(this, this.mail),
       new CacheStrategy(this, this.mail.getEmail()),
-      new OnlineStrategy(this, this.gravatarProvider, this.mail)
+      new OnlineStrategy(this, this.gravatarProvider, this.mail),
+      new OnlineStrategy(this, this.libravatarProvider, this.mail)
     ];
     return await this.executeStrategies(strategies);
   }
@@ -217,8 +220,8 @@ export default class ProfilePictureFetcher {
    */
   async getAvatarBlob() {
     try {
-      const reponse = this.mail.isPublic() 
-        ? await this.getPublicAvatar() 
+      const reponse = this.mail.isPublic()
+        ? await this.getPublicAvatar()
         : await this.getDomainAvatar();
       if (reponse === "notFound") {
         this.saveNotFoundToCache(this.domain);
