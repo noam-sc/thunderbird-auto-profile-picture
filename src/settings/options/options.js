@@ -1,6 +1,6 @@
 import CacheStorage from "../../src/CacheStorage.js";
 import ProfilePictureFetcher from "../../src/ProfilePictureFetcher.js";
-import Mail from "../../src/Mail.js";
+import Author from "../../src/Author.js";
 import SettingsManager from "../SettingsManager.js";
 
 const cacheSizeElement = document.getElementById("cacheSize");
@@ -63,7 +63,7 @@ async function fetchProfilePicture() {
   profilePictureDiv.style.display = "flex";
   profilePictureDiv.innerHTML = "";
 
-  const mail = await Mail.fromAuthor(emailInput.value);
+  const mail = await Author.fromAuthor(emailInput.value);
   const fetcher = new ProfilePictureFetcher(window, mail, "duckduckgo", true);
   const url = await fetcher.getAvatar();
 

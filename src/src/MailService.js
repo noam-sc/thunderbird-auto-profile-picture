@@ -1,5 +1,5 @@
 import ICAL from "../libs/ical.js";
-import Mail from "./Mail.js";
+import Author from "./Author.js";
 import RecipientInitial from "./RecipientInitial.js";
 
 /**
@@ -19,31 +19,38 @@ class MailService {
   async getUrl(message, context = "inboxList") {
     const author = await this.getCorrespondent(message, context);
     let url = await this.avatarService.getAvatar(author);
-    const mail = await Mail.fromAuthor(author);
     if (context === "messageHeader" && !url) {
-      url = RecipientInitial.buildInitials(mail, author);
+      url = RecipientInitial.buildInitials(author);
     }
-    return { [mail.getEmail()]: url };
+    return { [author.getEmail()]: url };
   }
 
   /**
    * Retrieves the correspondent for the given message.
    * @param {Object} message - The message object.
    * @param {string} [context="inboxList"] - The context of the request. (inboxList or messageHeader)
-   * @returns {Promise<string>} - The correspondent's email address.
+   * @returns {Promise<Author>} - The correspondent's email address.
    */
   async getCorrespondent(message, context = "inboxList") {
     if (message.folder?.type === "sent" && message.recipients.length > 0 && context === "inboxList") {
-      return message.recipients[0];
+      return await Author.fromAuthor(message.recipients[0]);
     }
     if (message.author.includes("drive-shares-noreply@google.com") || message.author.includes("drive-shares-dm-noreply@google.com")) { // proxy emails
       const fullMessage = await browser.messages.getFull(message.id);
       if (fullMessage.headers["reply-to"]) {
-        return fullMessage.headers["reply-to"][0];
+        return await Author.fromAuthor(fullMessage.headers["reply-to"][0]);
       }
-      return message.author;
+      return await Author.fromAuthor(message.author);
     }
-    return message.author;
+
+    const mail = await Author.fromAuthor(message.author);
+    if (mail && mail.getEmail().match(/@duck\.com$/)) {
+      const match = mail.getEmail().match(/^(.+)_at_(.+?)_.+@duck\.com$/);
+      if (match) {
+        return await Author.fromAuthor(`${match[1]}@${match[2]}`);
+      }
+    }
+    return mail;
   }
 
   /**

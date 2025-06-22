@@ -1,4 +1,4 @@
-import Mail from "../src/Mail.js";
+import Author from "../src/Author.js";
 
 export const Scope = {
   DOMAIN: "domain",
@@ -20,13 +20,13 @@ export default class Provider {
   }
 
   /**
-   * Gets the profile picture URL for the given email.
+   * Gets the profile picture URL for the given author.
    * This method must be implemented by subclasses.
-   * @param {Mail} mail - The email to get the URL for.
-   * @returns {Promise<string>} The profile picture URL for the email.
+   * @param {Author} author - The author to get the URL for.
+   * @returns {Promise<string>} The profile picture URL for the author.
    * @throws {Error} If the method is not implemented.
    */
-  async getUrl(mail) {
-    throw new Error("Method 'getUrl(mail)' must be implemented.");
+  async getUrl(author) {
+    throw new Error("Method 'getUrl(author)' must be implemented.");
   }
 }

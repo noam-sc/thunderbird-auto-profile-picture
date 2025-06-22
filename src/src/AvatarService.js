@@ -1,4 +1,4 @@
-import Mail from "./Mail.js";
+import Author from "./Author.js";
 import ProfilePictureFetcher from "./ProfilePictureFetcher.js";
 import defaultSettings from "../settings/defaultSettings.js";
 
@@ -44,19 +44,18 @@ export default class AvatarService {
    * 3. If the avatar is marked as waiting, poll until it's ready
    * 4. Return the cached avatar URL
    * 
-   * @param {string} author - The email address of the author.
+   * @param {Author} author - The author for whom to fetch the avatar URL.
    * @returns {Promise<string|null>} - The avatar URL or null if request limit exceeded or not found.
    */
   async getAvatar(author) {
-    let lcAuthor = author.toLowerCase();
+    let lcAuthor = author.getAuthor().toLowerCase();
     if (!this.sessionCacheAvatarUrls[lcAuthor]) {
       if (this.countWaitingAvatars() > defaultSettings.MAX_REQUEST_SIZE) {
-        console.warn("Too many requests in progress, skipping avatar fetch for " + author);
+        console.warn("Too many requests in progress, skipping avatar fetch for " + author.getAuthor());
         return null;
       }
       this.sessionCacheAvatarUrls[lcAuthor] = Status.WAITING;
-      const mailObject = await Mail.fromAuthor(author);
-      const profilePictureFetcher = new ProfilePictureFetcher(window, mailObject);
+      const profilePictureFetcher = new ProfilePictureFetcher(window, author);
       this.sessionCacheAvatarUrls[lcAuthor] = await profilePictureFetcher.getAvatar();
     }
     while (this.sessionCacheAvatarUrls[lcAuthor] === Status.WAITING) {

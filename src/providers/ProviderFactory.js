@@ -1,6 +1,7 @@
 import GoogleProvider from './Google.js';
 import DuckDuckGoProvider from './DuckDuckGo.js';
 import GravatarProvider from './Gravatar.js';
+import LibravatarProvider from './Libravatar.js';
 import BimiProvider from './Bimi.js';
 import IconHorseProvider from './IconHorse.js';
 import SplitbeeProvider from './Splitbee.js';
@@ -8,7 +9,7 @@ import FaviconWebpageProvider from './FaviconWebpage.js';
 import Provider from './Provider.js';
 
 export default class ProviderFactory {
-  
+
   /**
    * Creates an instance of a provider based on the given name.
    * 
@@ -26,6 +27,8 @@ export default class ProviderFactory {
         return new DuckDuckGoProvider();
       case "gravatar":
         return new GravatarProvider();
+      case "libravatar":
+        return new LibravatarProvider();
       case "bimi":
         return new BimiProvider(wdow);
       case "iconhorse":

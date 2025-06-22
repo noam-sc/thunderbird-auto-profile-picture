@@ -3,9 +3,9 @@ import defaultSettings from "../settings/defaultSettings.js";
 /**
  * Class representing a mail object.
  */
-export default class Mail {
+export default class Author {
   /**
-   * Creates an instance of Mail.
+   * Creates an instance of Author.
    * @param {string} author - The author of the message.
    * @param {string} mail - The email address of the author.
    */
@@ -27,7 +27,7 @@ export default class Mail {
       if (parsed) {
         return parsed[0].email;
       }
-    } catch (error) {}
+    } catch (error) { }
     const email = author.match(/<(.+)>/);
     if (email) {
       return email[1].toLowerCase().trim();
@@ -36,13 +36,13 @@ export default class Mail {
   }
 
   /**
-   * Static factory method that creates a Mail instance from an author string.
+   * Static factory method that creates an Author instance from an author string.
    * @param {string} author - The author of the message.
-   * @returns {Mail} - The Mail instance.
+   * @returns {Author} - The Author instance.
    */
   static async fromAuthor(author) {
-    const mail = await Mail.parse(author);
-    return new Mail(author, mail);
+    const mail = await Author.parse(author);
+    return new Author(author, mail);
   }
 
   /**
@@ -51,6 +51,22 @@ export default class Mail {
    */
   getEmail() {
     return this.mail;
+  }
+
+  /**
+   * Retrieves the author
+   * @returns {string} - The author
+   */
+  getAuthor() {
+    return this.author;
+  }
+
+  /**
+   * Overrides the toString method to return the author string.
+   * @returns {string} - The author string.
+   */
+  toString() {
+    return this.author;
   }
 
   /**
@@ -77,10 +93,10 @@ export default class Mail {
 
   /**
    * Removes the subdomain from the email address.
-   * @returns {Mail} - A new Mail instance with the subdomain removed.
+   * @returns {Author} - A new Author instance with the subdomain removed.
    */
   removeSubDomain() {
-    return new Mail(this.author, this.mail.split("@")[0] + "@" + this.getTopDomain());
+    return new Author(this.author, this.mail.split("@")[0] + "@" + this.getTopDomain());
   }
 
   /**

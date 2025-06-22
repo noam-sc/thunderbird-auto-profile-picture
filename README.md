@@ -16,9 +16,6 @@ Upgrade your Thunderbird experience with intelligent sender visualization that t
 ![Latest version on the Thunderbird marketplace](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Faddons.thunderbird.net%2Fapi%2Fv4%2Faddons%2Faddon%2Fauto-profile-picture%2F&query=%24.current_version.version&label=latest%20version&logo=thunderbird&logoColor=%23ffffff)
 ![GitHub Release](https://img.shields.io/github/v/release/noam-sc/thunderbird-auto-profile-picture?label=github%20release&logo=github)
 
-
-
-
 ## About The Extension
 
 ![Preview in message header](images/screen.webp)
@@ -44,6 +41,7 @@ Official installation (requires Internet access) from [Thunderbird Add-on site](
 - Click on the `+ Add to Thunderbird` button, then click `Add` on the confirmation dialog to confirm.
 
 Install (with or without Internet access) the XPI file directly:
+
 - Download [GitHub XPI version](https://github.com/noam-sc/thunderbird-auto-profile-picture/releases/latest) via the `Add-ons Manager`.
 - From the [Thunderbird Menu Bar](https://support.mozilla.org/en-US/kb/display-thunderbird-menus-and-toolbar), select `Add-ons and Themes` to open the menu.
 - Click the gear icon and choose `Install Add-on From File…`
@@ -77,6 +75,11 @@ If you have a suggestion that would make this better, please fork the repo and c
 - Choose `Debug Add-ons`
 - Click on `Load Temporary Add-on...`
 - Select the `manifest.json` file in the `/src/` folder of this repository
+
+### Tests
+
+- Run `npm install` to install the dependencies
+- Run `npm run test` to run the tests
 
 ## License
 

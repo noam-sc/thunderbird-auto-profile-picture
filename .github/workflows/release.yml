@@ -6,25 +6,37 @@ on:
       - "*"
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: npm install
+      - name: Run tests
+        run: npm test
+
   build:
     runs-on: ubuntu-latest
-
+    needs: test
     steps:
-      - uses: actions/checkout@master
-
+      - uses: actions/checkout@v4
       - name: Install zip
         uses: montudor/action-zip@v1
-
       - name: Archive release
         run: zip -qq -r auto-profile-picture.xpi .
         working-directory: src
-      
       - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           tag="${GITHUB_REF#refs/tags/}"
-
           gh release create "$tag" \
             --title="$tag" \
             --draft \

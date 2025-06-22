@@ -1,4 +1,4 @@
-import Mail from "./Mail.js";
+import Author from "./Author.js";
 import defaultSettings from "../settings/defaultSettings.js";
 import RecipientInitial from "./RecipientInitial.js";
 
@@ -35,7 +35,7 @@ class MessagesService {
   /**
    * Maps messages to their correspondents.
    * @param {Array} messages - The list of messages.
-   * @returns {Promise<Array>} - The list of correspondents.
+   * @returns {Promise<Array<Author>>} - The list of correspondents (Author objects).
    */
   async mapMessagesToCorrespondents(messages) {
     const correspondents = await Promise.all(messages.map(async (message) => {
@@ -55,8 +55,7 @@ class MessagesService {
 
     let avatarPromises = Array.from(messagesAuthorsSet).map(async (author) => {
       let url = await this.avatarService.getAvatar(author);
-      const mail = await Mail.fromAuthor(author);
-      urls[author] = url || RecipientInitial.buildInitials(mail, author);
+      urls[author] = url || RecipientInitial.buildInitials(author);
     });
 
     await Promise.all(avatarPromises);
@@ -69,15 +68,14 @@ class MessagesService {
   /**
    * Retrieves initials for the given messages.
    * @param {Array} messages - The list of messages.
-   * @returns {Promise<Array>} - The list of initials.
+   * @returns {Promise<Array<string>>} - The list of initials.
    */
   async getInitialsFromMessages(messages) {
     let messagesAuthorsSet = await this.getMessagesAuthorsSet(messages);
     let initials = {};
 
     await Promise.all(Array.from(messagesAuthorsSet).map(async (author) => {
-      const mail = await Mail.fromAuthor(author);
-      initials[author] = RecipientInitial.buildInitials(mail, author);
+      initials[author] = RecipientInitial.buildInitials(author);
     }));
 
     return await this.mapMessagesToCorrespondents(messages).then((correspondents) => {
@@ -88,7 +86,7 @@ class MessagesService {
   /**
    * Retrieves a set of authors from the given messages.
    * @param {Array} messages - The list of messages.
-   * @returns {Promise<Set>} - The set of authors.
+   * @returns {Promise<Set<Author>>} - The set of authors (Author objects).
    */
   async getMessagesAuthorsSet(messages) {
     return new Set(

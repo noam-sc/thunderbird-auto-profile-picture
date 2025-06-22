@@ -1,4 +1,4 @@
-import Mail from "./Mail.js";
+import Author from "./Author.js";
 import ProfilePictureFetcher from "./ProfilePictureFetcher.js";
 import ImageConverter from "./ImageConverter.js";
 
@@ -22,8 +22,8 @@ class ContactsService {
     const mail = this.mailService.getPrimaryEmail(contactNode);
     if (!mail) return;
 
-    const mailObject = await Mail.fromAuthor(mail);
-    const file = await new ProfilePictureFetcher(window, mailObject).getAvatar("file");
+    const authorObject = await Author.fromAuthor(mail);
+    const file = await new ProfilePictureFetcher(window, authorObject).getAvatar("file");
     if (!file) return;
 
     const pngFile = await new ImageConverter(file).convertToPng();

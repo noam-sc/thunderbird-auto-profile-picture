@@ -5,25 +5,26 @@ import { OnlineStrategy } from "./strategies/OnlineStrategy.js";
 import { ContactsStrategy } from "./strategies/ContactsStrategy.js";
 import { VoidStrategy } from "./strategies/VoidStrategy.js";
 import { AvatarStrategy } from "./strategies/AvatarStrategy.js";
-import Mail from "./Mail.js";
+import Author from "./Author.js";
 
 export default class ProfilePictureFetcher {
   /**
    * 
    * @param {Window} wdow Window object
-   * @param {Mail} mailObject Mail object to fetch the avatar for
+   * @param {Author} authorObject Author object to fetch the avatar for
    * @param {string} providerName Provider name to use for fetching the avatar
    * @param {boolean} disableCache Disable cache
    */
-  constructor(wdow, mailObject, providerName = "duckduckgo", disableCache = false) {
+  constructor(wdow, authorObject, providerName = "duckduckgo", disableCache = false) {
     this.wdow = wdow;
-    this.mail = mailObject;
+    this.author = authorObject;
     this.provider = ProviderFactory.createProvider(providerName, wdow);
     this.gravatarProvider = ProviderFactory.createProvider("gravatar", wdow);
+    this.libravatarProvider = ProviderFactory.createProvider("libravatar", wdow);
     this.bimiProvider = ProviderFactory.createProvider("bimi", wdow);
     this.webProvider = ProviderFactory.createProvider("favicon_webpage", wdow);
     this.providerName = providerName;
-    this.domain = mailObject.getDomain();
+    this.domain = authorObject.getDomain();
     this.cache = new CacheStorage();
     this.disableCache = disableCache;
   }
@@ -66,8 +67,8 @@ export default class ProfilePictureFetcher {
     };
 
     this.cache.setProperty("ICON_" + iconDomain, fileInfos);
-    if (source == "gravatar" || this.mail.isPublic()) {
-      this.cache.setProperty("ICON_" + this.mail.getEmail(), fileInfos);
+    if (source == "gravatar" || this.author.isPublic()) {
+      this.cache.setProperty("ICON_" + this.author.getEmail(), fileInfos);
     } else {
       this.cache.setProperty("ICON_" + this.domain, fileInfos);
     }
@@ -84,9 +85,9 @@ export default class ProfilePictureFetcher {
     };
 
     this.cache.setProperty("ICON_" + iconDomain, notFoundObject);
-    if (this.mail.isPublic()) {
+    if (this.author.isPublic()) {
       this.cache.setProperty(
-        "ICON_" + this.mail.getEmail(),
+        "ICON_" + this.author.getEmail(),
         notFoundObject
       );
     } else {
@@ -110,7 +111,7 @@ export default class ProfilePictureFetcher {
 
       if (blob.type.includes("text/plain")) {
         const string = await blob.text();
-        if (string.includes("svg")) { 
+        if (string.includes("svg")) {
           // wrong header returned by the server : text/plain instead of image/svg+xml
           // happens with noreply@recruiting.facebook.com for instance
           blob = new Blob([string], { type: "image/svg+xml" });
@@ -136,10 +137,10 @@ export default class ProfilePictureFetcher {
       return false;
     }
     if (
-      this.mail.isPublic() &&
-      domain !== this.mail.getEmail()
+      this.author.isPublic() &&
+      domain !== this.author.getEmail()
     ) {
-      originalDomain = this.mail.getEmail();
+      originalDomain = this.author.getEmail();
     }
     const key = "ICON_" + domain;
 
@@ -181,19 +182,20 @@ export default class ProfilePictureFetcher {
    * @returns {Blob|string} Blob of the avatar or "notFound" if not found
    */
   async getDomainAvatar() {
-    const topDomain = this.mail.getTopDomain();
+    const topDomain = this.author.getTopDomain();
     const strategies = [
-      new ContactsStrategy(this, this.mail),
-      new CacheStrategy(this, this.mail.getEmail()),
+      new ContactsStrategy(this, this.author),
+      new CacheStrategy(this, this.author.getEmail()),
       new CacheStrategy(this, this.domain),
-      new OnlineStrategy(this, this.bimiProvider, this.mail), // company first
-      this.mail.hasSubDomain() ? new CacheStrategy(this, topDomain) : new VoidStrategy(),
-      this.mail.hasSubDomain() ? new OnlineStrategy(this, this.bimiProvider, this.mail.removeSubDomain()) : new VoidStrategy(),
-      new OnlineStrategy(this, this.gravatarProvider, this.mail),
-      new OnlineStrategy(this, this.provider, this.mail),
-      new OnlineStrategy(this, this.webProvider, this.mail),
-      this.mail.hasSubDomain() ? new OnlineStrategy(this, this.provider, this.mail.removeSubDomain()) : new VoidStrategy(),
-      this.mail.hasSubDomain() ? new OnlineStrategy(this, this.webProvider, this.mail.removeSubDomain()) : new VoidStrategy()
+      new OnlineStrategy(this, this.bimiProvider, this.author), // company first
+      this.author.hasSubDomain() ? new CacheStrategy(this, topDomain) : new VoidStrategy(),
+      this.author.hasSubDomain() ? new OnlineStrategy(this, this.bimiProvider, this.author.removeSubDomain()) : new VoidStrategy(),
+      new OnlineStrategy(this, this.gravatarProvider, this.author),
+      new OnlineStrategy(this, this.libravatarProvider, this.author),
+      new OnlineStrategy(this, this.provider, this.author),
+      new OnlineStrategy(this, this.webProvider, this.author),
+      this.author.hasSubDomain() ? new OnlineStrategy(this, this.provider, this.author.removeSubDomain()) : new VoidStrategy(),
+      this.author.hasSubDomain() ? new OnlineStrategy(this, this.webProvider, this.author.removeSubDomain()) : new VoidStrategy()
     ];
     return await this.executeStrategies(strategies);
   }
@@ -204,9 +206,10 @@ export default class ProfilePictureFetcher {
    */
   async getPublicAvatar() {
     const strategies = [
-      new ContactsStrategy(this, this.mail),
-      new CacheStrategy(this, this.mail.getEmail()),
-      new OnlineStrategy(this, this.gravatarProvider, this.mail)
+      new ContactsStrategy(this, this.author),
+      new CacheStrategy(this, this.author.getEmail()),
+      new OnlineStrategy(this, this.gravatarProvider, this.author),
+      new OnlineStrategy(this, this.libravatarProvider, this.author)
     ];
     return await this.executeStrategies(strategies);
   }
@@ -217,14 +220,14 @@ export default class ProfilePictureFetcher {
    */
   async getAvatarBlob() {
     try {
-      const reponse = this.mail.isPublic() 
-        ? await this.getPublicAvatar() 
+      const response = this.author.isPublic()
+        ? await this.getPublicAvatar()
         : await this.getDomainAvatar();
-      if (reponse === "notFound") {
+      if (response === "notFound") {
         this.saveNotFoundToCache(this.domain);
         return null;
       }
-      return reponse;
+      return response;
     } catch (error) {
       console.error("Error fetching avatar", error);
       return null;
