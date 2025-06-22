@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import RecipientInitial from '../../src/src/RecipientInitial.js';
-import Mail from '../../src/src/Mail.js';
+import Author from '../../src/src/Author.js';
 
 const SAMPLE_AUTHOR = 'John Doe <john@example.com>';
 const SAMPLE_EMAIL = 'john@example.com';
@@ -113,10 +113,9 @@ describe('RecipientInitial', () => {
 
     describe('buildInitials()', () => {
         it('should build initials object with correct structure', async () => {
-            const mail = await Mail.fromAuthor(SAMPLE_AUTHOR);
-            const author = SAMPLE_AUTHOR;
+            const mail = await Author.fromAuthor(SAMPLE_AUTHOR);
 
-            const initials = RecipientInitial.buildInitials(mail, author);
+            const initials = RecipientInitial.buildInitials(mail);
 
             expect(initials).to.be.an('object');
             expect(initials).to.have.property('value');
@@ -124,22 +123,20 @@ describe('RecipientInitial', () => {
         });
 
         it('should use mail.mail for color generation when available', async () => {
-            const mail = await Mail.fromAuthor(SAMPLE_AUTHOR);
-            const author = SAMPLE_AUTHOR;
+            const mail = await Author.fromAuthor(SAMPLE_AUTHOR);
 
-            const initials = RecipientInitial.buildInitials(mail, author);
+            const initials = RecipientInitial.buildInitials(mail);
             const expectedColor = RecipientInitial.getColor(SAMPLE_EMAIL);
 
             expect(initials.color).to.equal(expectedColor);
         });
 
         it('should fallback to author for color generation when mail.mail is not available', async () => {
-            const mail = await Mail.fromAuthor(SAMPLE_AUTHOR);
+            const mail = await Author.fromAuthor(SAMPLE_AUTHOR);
             mail.mail = null; // Simulate missing mail
-            const author = SAMPLE_AUTHOR;
 
-            const initials = RecipientInitial.buildInitials(mail, author);
-            const expectedColor = RecipientInitial.getColor(author);
+            const initials = RecipientInitial.buildInitials(mail);
+            const expectedColor = RecipientInitial.getColor(SAMPLE_AUTHOR);
 
             expect(initials.color).to.equal(expectedColor);
         });
@@ -152,8 +149,8 @@ describe('RecipientInitial', () => {
             ];
 
             for (const edgeCase of edgeCases) {
-                const mail = new Mail(edgeCase.author, edgeCase.mail);
-                const initials = RecipientInitial.buildInitials(mail, edgeCase.author);
+                const mail = new Author(edgeCase.author, edgeCase.mail);
+                const initials = RecipientInitial.buildInitials(mail);
 
                 expect(initials).to.have.property('value');
                 expect(initials).to.have.property('color');

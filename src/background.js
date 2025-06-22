@@ -4,6 +4,7 @@ import MailService from "./src/MailService.js";
 import SettingsManager from "./settings/SettingsManager.js";
 import ContactsService from "./src/ContactsService.js";
 import MessagesService from "./src/MessagesService.js";
+import Author from "./src/Author.js";
 
 let cache = new CacheStorage();
 let settingsManager = new SettingsManager(cache);
@@ -34,7 +35,8 @@ async function handleNeedData(tab, result) {
   let urlsDict = {};
   for (let popup of dataPopups) {
     let mail = popup.mail;
-    let url = await avatarService.getAvatar(mail);
+    const author = await Author.fromAuthor(mail);
+    let url = await avatarService.getAvatar(author);
     urlsDict[mail] = url;
   }
   let payload = {

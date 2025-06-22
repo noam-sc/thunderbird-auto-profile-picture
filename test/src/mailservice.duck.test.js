@@ -15,26 +15,26 @@ describe('MailService.getCorrespondent - relays', () => {
     it('should handle Duck relay pattern', async () => {
         let msg = { author: DUCK_RELAY_EMAIL, folder: {}, recipients: [] };
         let result = await mailService.getCorrespondent(msg);
-        expect(result).to.equal(DUCK_REAL_EMAIL);
+        expect(result.getEmail()).to.equal(DUCK_REAL_EMAIL);
     });
 
     it('should fallback to original for no Duck relay pattern', async () => {
         let msg = { author: DUCK_INVALID_RELAY_EMAIL, folder: {}, recipients: [] };
         let result = await mailService.getCorrespondent(msg);
-        expect(result).to.equal(DUCK_INVALID_RELAY_EMAIL);
+        expect(result.getEmail()).to.equal(DUCK_INVALID_RELAY_EMAIL);
     });
 
     it('should handle Google Drive proxy', async () => {
         let msg = { author: GOOGLE_DRIVE_PROXY_EMAIL, id: 1, folder: {}, recipients: [] };
         globalThis.browser = { messages: { getFull: async () => ({ headers: { 'reply-to': [GOOGLE_DRIVE_REAL_EMAIL] } }) } };
         let result = await mailService.getCorrespondent(msg);
-        expect(result).to.equal(GOOGLE_DRIVE_REAL_EMAIL);
+        expect(result.getEmail()).to.equal(GOOGLE_DRIVE_REAL_EMAIL);
     });
 
     it('should return author if no reply-to header when Google Drive proxy', async () => {
         let msg = { author: GOOGLE_DRIVE_PROXY_EMAIL, id: 1, folder: {}, recipients: [] };
         globalThis.browser = { messages: { getFull: async () => ({ headers: {} }) } };
         let result = await mailService.getCorrespondent(msg);
-        expect(result).to.equal(GOOGLE_DRIVE_PROXY_EMAIL);
+        expect(result.getEmail()).to.equal(GOOGLE_DRIVE_PROXY_EMAIL);
     });
 });
