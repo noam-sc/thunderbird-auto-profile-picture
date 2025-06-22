@@ -93,7 +93,7 @@ export default class Author {
 
   /**
    * Removes the subdomain from the email address.
-   * @returns {Author} - A new Mail instance with the subdomain removed.
+   * @returns {Author} - A new Author instance with the subdomain removed.
    */
   removeSubDomain() {
     return new Author(this.author, this.mail.split("@")[0] + "@" + this.getTopDomain());

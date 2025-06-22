@@ -220,14 +220,14 @@ export default class ProfilePictureFetcher {
    */
   async getAvatarBlob() {
     try {
-      const reponse = this.author.isPublic()
+      const response = this.author.isPublic()
         ? await this.getPublicAvatar()
         : await this.getDomainAvatar();
-      if (reponse === "notFound") {
+      if (response === "notFound") {
         this.saveNotFoundToCache(this.domain);
         return null;
       }
-      return reponse;
+      return response;
     } catch (error) {
       console.error("Error fetching avatar", error);
       return null;
