@@ -41,8 +41,7 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "autoprofilepicture@astucesweb.fr",
-      "strict_min_version": "112.0",
-      "strict_max_version": "140.*"
+      "strict_min_version": "112.0"
     }
   }
 }
