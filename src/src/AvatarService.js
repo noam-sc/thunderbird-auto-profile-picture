@@ -40,9 +40,9 @@ export default class AvatarService {
    * 2. If not in cache:
    *    a. Check if we're already processing too many requests
    *    b. Store as waiting in the cache
-   *    c. Fetch and store the avatar URL in the cache
-   * 3. If the avatar is marked as waiting, poll until it's ready
-   * 4. Return the cached avatar URL
+   *    c. Fetch and store the avatar URL in the cache asynchronously
+   * 3. Return immediately with cached result or null for new requests
+   * 4. For waiting requests, use non-blocking timeout with reasonable limit
    * 
    * @param {Author} author - The author for whom to fetch the avatar URL.
    * @returns {Promise<string|null>} - The avatar URL or null if request limit exceeded or not found.
@@ -55,12 +55,45 @@ export default class AvatarService {
         return null;
       }
       this.sessionCacheAvatarUrls[lcAuthor] = Status.WAITING;
-      const profilePictureFetcher = new ProfilePictureFetcher(window, author);
-      this.sessionCacheAvatarUrls[lcAuthor] = await profilePictureFetcher.getAvatar();
+
+      // Start fetching asynchronously without blocking
+      this.fetchAvatarAsync(author, lcAuthor);
+
+      // Return null immediately for new requests to avoid blocking
+      return null;
     }
-    while (this.sessionCacheAvatarUrls[lcAuthor] === Status.WAITING) {
-      await new Promise((resolve) => setTimeout(resolve, 200));
+
+    // If already waiting, check with timeout to avoid infinite blocking
+    if (this.sessionCacheAvatarUrls[lcAuthor] === Status.WAITING) {
+      const startTime = Date.now();
+      const maxWaitTime = defaultSettings.AVATAR_FETCH_TIMEOUT_MS || 5000;
+
+      while (this.sessionCacheAvatarUrls[lcAuthor] === Status.WAITING) {
+        if (Date.now() - startTime > maxWaitTime) {
+          console.warn("Avatar fetch timeout for " + author.getAuthor());
+          this.sessionCacheAvatarUrls[lcAuthor] = null;
+          break;
+        }
+        await new Promise((resolve) => setTimeout(resolve, 50)); // Reduced polling interval
+      }
     }
+
     return this.sessionCacheAvatarUrls[lcAuthor];
+  }
+
+  /**
+   * Fetches avatar asynchronously without blocking the caller
+   * @param {Author} author - The author for whom to fetch the avatar
+   * @param {string} lcAuthor - Lowercase author key for caching
+   */
+  async fetchAvatarAsync(author, lcAuthor) {
+    try {
+      const profilePictureFetcher = new ProfilePictureFetcher(window, author);
+      const result = await profilePictureFetcher.getAvatar();
+      this.sessionCacheAvatarUrls[lcAuthor] = result;
+    } catch (error) {
+      console.error("Error fetching avatar for " + author.getAuthor(), error);
+      this.sessionCacheAvatarUrls[lcAuthor] = null;
+    }
   }
 }

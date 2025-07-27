@@ -35,6 +35,9 @@ const defaultSettings = {
     WAIT_TIME_MS: 500,
     SUBBATCH_SIZE: 15,
     MAX_REQUEST_SIZE: 100,
+    FETCH_TIMEOUT_MS: 2000, // 2 second timeout for network requests
+    PARALLEL_STRATEGY_LIMIT: 3, // Number of strategies to try in parallel
+    AVATAR_FETCH_TIMEOUT_MS: 5000, // Maximum time to wait for avatar fetch
 };
 
 export default defaultSettings;

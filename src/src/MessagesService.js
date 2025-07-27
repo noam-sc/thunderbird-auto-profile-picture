@@ -53,12 +53,19 @@ class MessagesService {
     let messagesAuthorsSet = await this.getMessagesAuthorsSet(messages);
     let urls = {};
 
+    // Use Promise.allSettled to prevent one slow avatar from blocking others
     let avatarPromises = Array.from(messagesAuthorsSet).map(async (author) => {
-      let url = await this.avatarService.getAvatar(author);
-      urls[author] = url || RecipientInitial.buildInitials(author);
+      try {
+        let url = await this.avatarService.getAvatar(author);
+        urls[author] = url || RecipientInitial.buildInitials(author);
+      } catch (error) {
+        console.warn(`Error fetching avatar for ${author}:`, error);
+        urls[author] = RecipientInitial.buildInitials(author);
+      }
     });
 
-    await Promise.all(avatarPromises);
+    // Wait for all avatar fetches to complete or timeout
+    await Promise.allSettled(avatarPromises);
 
     return await this.mapMessagesToCorrespondents(messages).then((correspondents) => {
       return correspondents.map((correspondent) => urls[correspondent]);
@@ -113,15 +120,20 @@ class MessagesService {
    * @param {Function} resolve - The resolve function for the promise.
    */
   async displayAvatars(messages, tabId, offset, resolve) {
-    const urls = await this.fetchAvatarsFromMessages(messages);
+    // Resolve immediately to prevent blocking the UI
     resolve();
 
-    const result = await browser.headerApi.pictureInboxList(tabId, JSON.stringify(urls), offset, false);
-    if (result.status === "needReprint") {
-      if (result.eventType === "scroll") {
-        this.lastDisplayInboxListCall -= this.WAIT_TIME_MS / 2;
+    try {
+      const urls = await this.fetchAvatarsFromMessages(messages);
+      const result = await browser.headerApi.pictureInboxList(tabId, JSON.stringify(urls), offset, false);
+      if (result.status === "needReprint") {
+        if (result.eventType === "scroll") {
+          this.lastDisplayInboxListCall -= this.WAIT_TIME_MS / 2;
+        }
+        await this.displayInboxList(null, true);
       }
-      await this.displayInboxList(null, true);
+    } catch (error) {
+      console.warn("Error displaying avatars:", error);
     }
   }
 

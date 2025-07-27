@@ -6,6 +6,7 @@ import { ContactsStrategy } from "./strategies/ContactsStrategy.js";
 import { VoidStrategy } from "./strategies/VoidStrategy.js";
 import { AvatarStrategy } from "./strategies/AvatarStrategy.js";
 import Author from "./Author.js";
+import defaultSettings from "../settings/defaultSettings.js";
 
 export default class ProfilePictureFetcher {
   /**
@@ -103,10 +104,23 @@ export default class ProfilePictureFetcher {
    * @returns {Blob|null} Blob of the downloaded image or null if not found
    */
   async downloadImage(url, iconDomain, source = this.providerName) {
-    return await this.wdow.fetch(url).then(async (response) => {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), defaultSettings.FETCH_TIMEOUT_MS || 2000);
+
+    try {
+      const response = await this.wdow.fetch(url, {
+        signal: controller.signal,
+        headers: {
+          'Accept': 'image/*,*/*;q=0.8'
+        }
+      });
+
+      clearTimeout(timeoutId);
+
       if ((response.status == 404 && source == "gravatar") || !response.ok) {
         return null;
       }
+
       let blob = await response.blob();
 
       if (blob.type.includes("text/plain")) {
@@ -123,7 +137,15 @@ export default class ProfilePictureFetcher {
       this.saveBlobToCache(blob, iconDomain, source);
 
       return blob;
-    });
+    } catch (error) {
+      clearTimeout(timeoutId);
+      if (error.name === 'AbortError') {
+        console.warn(`Request timeout for ${url} (${source})`);
+      } else {
+        console.warn(`Error downloading image from ${url} (${source}):`, error);
+      }
+      return null;
+    }
   }
 
   /**
@@ -166,14 +188,49 @@ export default class ProfilePictureFetcher {
 
   /**
    * Executes a series of strategies to fetch an avatar
+   * Tries strategies in parallel for better performance, with a limit on concurrent requests
    * @param {Array<AvatarStrategy>} strategies Array of strategies to execute
    * @returns {Blob|string} Blob of the avatar or "notFound" if not found
    */
   async executeStrategies(strategies) {
-    for (const strategy of strategies) {
+    const parallelLimit = defaultSettings.PARALLEL_STRATEGY_LIMIT || 3;
+
+    // First, try cache and contacts strategies immediately (fast, local operations)
+    const fastStrategies = strategies.filter(strategy =>
+      strategy.constructor.name === 'CacheStrategy' ||
+      strategy.constructor.name === 'ContactsStrategy'
+    );
+
+    for (const strategy of fastStrategies) {
       const avatar = await strategy.fetchAvatar();
       if (avatar) return avatar;
     }
+
+    // Then try online strategies in parallel batches
+    const onlineStrategies = strategies.filter(strategy =>
+      strategy.constructor.name === 'OnlineStrategy'
+    );
+
+    for (let i = 0; i < onlineStrategies.length; i += parallelLimit) {
+      const batch = onlineStrategies.slice(i, i + parallelLimit);
+      const promises = batch.map(strategy =>
+        strategy.fetchAvatar().catch(error => {
+          console.warn(`Strategy ${strategy.strategyName || strategy.constructor.name} failed:`, error);
+          return null;
+        })
+      );
+
+      // Use Promise.allSettled to avoid one failure stopping others
+      const results = await Promise.allSettled(promises);
+
+      // Return the first successful result
+      for (const result of results) {
+        if (result.status === 'fulfilled' && result.value) {
+          return result.value;
+        }
+      }
+    }
+
     return "notFound";
   }
 

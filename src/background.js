@@ -31,19 +31,42 @@ const messagesService = new MessagesService(mailService, avatarService);
  * @param {Object} result Result object containing data
  */
 async function handleNeedData(tab, result) {
-  let dataPopups = result.data.popupValues;
-  let urlsDict = {};
-  for (let popup of dataPopups) {
-    let mail = popup.mail;
-    const author = await Author.fromAuthor(mail);
-    let url = await avatarService.getAvatar(author);
-    urlsDict[mail] = url;
+  try {
+    let dataPopups = result.data.popupValues;
+    let urlsDict = {};
+
+    // Process popups in parallel to avoid sequential blocking
+    const popupPromises = dataPopups.map(async (popup) => {
+      try {
+        let mail = popup.mail;
+        const author = await Author.fromAuthor(mail);
+        let url = await avatarService.getAvatar(author);
+        return { mail, url };
+      } catch (error) {
+        console.warn("Error processing popup:", error);
+        return { mail: popup.mail, url: null };
+      }
+    });
+
+    // Wait for all popup processing to complete
+    const popupResults = await Promise.allSettled(popupPromises);
+
+    // Combine results
+    popupResults.forEach(result => {
+      if (result.status === 'fulfilled') {
+        urlsDict[result.value.mail] = result.value.url;
+      }
+    });
+
+    let payload = {
+      urls: urlsDict,
+      data: result.data,
+    };
+
+    browser.headerApi.pictureHeadersConversation(tab.id, JSON.stringify(payload));
+  } catch (error) {
+    console.warn("Error in handleNeedData:", error);
   }
-  let payload = {
-    urls: urlsDict,
-    data: result.data,
-  };
-  browser.headerApi.pictureHeadersConversation(tab.id, JSON.stringify(payload));
 }
 
 /**
@@ -52,16 +75,38 @@ async function handleNeedData(tab, result) {
  * @param {Array} messages Array of message objects
  */
 async function displayInTab(tab, messages) {
-  let urlsDict = {};
-  for (let message of messages) {
-    let urls = await mailService.getUrl(message, "messageHeader");
-    urlsDict = { ...urlsDict, ...urls };
-  }
-  let urlDictJSON = JSON.stringify(urlsDict);
-  let result = await browser.headerApi.pictureHeaders(tab.id, urlDictJSON);
+  try {
+    let urlsDict = {};
 
-  if (result.status === "needData") {
-    handleNeedData(tab, result);
+    // Process messages in parallel with timeout protection
+    const messagePromises = messages.map(async (message) => {
+      try {
+        let urls = await mailService.getUrl(message, "messageHeader");
+        return urls;
+      } catch (error) {
+        console.warn("Error processing message:", error);
+        return {};
+      }
+    });
+
+    // Use Promise.allSettled to avoid blocking on slow individual requests
+    const results = await Promise.allSettled(messagePromises);
+
+    // Combine all successful results
+    results.forEach(result => {
+      if (result.status === 'fulfilled') {
+        urlsDict = { ...urlsDict, ...result.value };
+      }
+    });
+
+    let urlDictJSON = JSON.stringify(urlsDict);
+    let result = await browser.headerApi.pictureHeaders(tab.id, urlDictJSON);
+
+    if (result.status === "needData") {
+      handleNeedData(tab, result);
+    }
+  } catch (error) {
+    console.warn("Error in displayInTab:", error);
   }
 }
 
@@ -92,24 +137,41 @@ async function displayInboxList(tab) {
  */
 function initListeners() {
   browser.messageDisplay.onMessageDisplayed.addListener(async (tab, message) => {
-    displayInTab(tab, [message]);
-    displayInboxList(tab);
+    // Don't await these calls to avoid blocking message display
+    displayInTab(tab, [message]).catch(error =>
+      console.warn("Error displaying avatars:", error)
+    );
+    displayInboxList(tab).catch(error =>
+      console.warn("Error displaying inbox list:", error)
+    );
   });
 
   browser.messageDisplay.onMessagesDisplayed.addListener(
     async (tab, messages) => {
-      displayInTab(tab, messages);
+      // Don't await to avoid blocking message display
+      displayInTab(tab, messages).catch(error =>
+        console.warn("Error displaying avatars:", error)
+      );
     }
   );
 
   browser.mailTabs.onDisplayedFolderChanged.addListener((tab) => {
-    displayInboxList(tab);
+    // Don't await to avoid blocking folder change
+    displayInboxList(tab).catch(error =>
+      console.warn("Error displaying inbox list on folder change:", error)
+    );
   });
 
   browser.messages.onNewMailReceived.addListener(async (folder, messages) => {
     setTimeout(async () => {
-      const currentTab = await browser.tabs.getCurrent();
-      displayInboxList(currentTab);
+      try {
+        const currentTab = await browser.tabs.getCurrent();
+        displayInboxList(currentTab).catch(error =>
+          console.warn("Error displaying inbox list on new mail:", error)
+        );
+      } catch (error) {
+        console.warn("Error getting current tab:", error);
+      }
     }, 1000);
   });
 
@@ -117,14 +179,21 @@ function initListeners() {
     if (tab.type !== "mail") {
       return;
     }
-    displayInboxList(tab);
+    // Don't await to avoid blocking tab updates
+    displayInboxList(tab).catch(error =>
+      console.warn("Error displaying inbox list on tab update:", error)
+    );
   });
 
   browser.runtime.onMessage.addListener(async (message, sender) => {
     if (message.action === "displayInboxList") {
-      displayInboxList();
+      displayInboxList().catch(error =>
+        console.warn("Error displaying inbox list from message:", error)
+      );
     } else if (message.action === "refreshSettings") {
-      refreshSettings();
+      refreshSettings().catch(error =>
+        console.warn("Error refreshing settings:", error)
+      );
     }
   });
 
@@ -132,9 +201,15 @@ function initListeners() {
 
   browser.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
     if (tab.status === "complete" && tab.type === "special") { // Thunderbird Conversations tab
-      let result = await browser.headerApi.pictureHeaders(tabId, "{}");
-      if (result.status === "needData") {
-        handleNeedData(tab, result);
+      try {
+        let result = await browser.headerApi.pictureHeaders(tabId, "{}");
+        if (result.status === "needData") {
+          handleNeedData(tab, result).catch(error =>
+            console.warn("Error handling need data:", error)
+          );
+        }
+      } catch (error) {
+        console.warn("Error with conversations tab:", error);
       }
     }
   });
@@ -142,5 +217,8 @@ function initListeners() {
 
 initListeners();
 if (inboxListEnabled) {
-  displayInboxList();
+  // Don't await this to avoid blocking extension startup
+  displayInboxList().catch(error =>
+    console.warn("Error displaying initial inbox list:", error)
+  );
 }
