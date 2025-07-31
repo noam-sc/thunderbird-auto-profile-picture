@@ -3,6 +3,8 @@
 - Manivest v3 support
 - Externalize the CSS in the API to a separate CSS file and inject it using resource:// URLs
 - Add automatic retry delay after 30 days when no profile picture is found
+- Options to disable and enable sources
+- Double initials
 
 ## 2.3.0 - 2025-06-22
 
