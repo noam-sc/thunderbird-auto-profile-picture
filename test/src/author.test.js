@@ -151,6 +151,34 @@ describe('Author', () => {
             const lowerMail = await Author.fromAuthor(SAMPLE_AUTHOR.toLowerCase());
             expect(lowerMail.getInitial()).to.equal('J');
         });
+    }); describe('getInitials()', () => {
+        beforeEach(() => {
+            globalThis.browser = {
+                messengerUtilities: {
+                    parseMailboxString: async () => null
+                }
+            };
+        });
+
+        it('should use first two words of display name', async () => {
+            const mail = await Author.fromAuthor('Mary Jane <mary.jane@example.com>');
+            expect(mail.getInitials()).to.equal('MJ');
+        });
+
+        it('should use local-part segments separated by dot when no display name', async () => {
+            const mail = await Author.fromAuthor('mary.jane@example.com');
+            expect(mail.getInitials()).to.equal('MJ');
+        });
+
+        it('should return single initial when only one word/segment', async () => {
+            const mail = await Author.fromAuthor('mary@example.com');
+            expect(mail.getInitials()).to.equal('M');
+        });
+
+        it('should fall back to getInitial when nothing else works', async () => {
+            const mail = await Author.fromAuthor('invalid-email');
+            expect(mail.getInitials()).to.equal('I');
+        });
     }); describe('Edge cases and error handling', () => {
         it('should handle malformed email addresses and empty strings gracefully', async () => {
             const invalidMail = await Author.fromAuthor('invalid-email');

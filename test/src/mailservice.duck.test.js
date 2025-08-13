@@ -13,13 +13,15 @@ describe('MailService.getCorrespondent - relays', () => {
     });
 
     it('should handle Duck relay pattern', async () => {
-        let msg = { author: DUCK_RELAY_EMAIL, folder: {}, recipients: [] };
+        let msg = { author: DUCK_RELAY_EMAIL, id: 1, folder: {}, recipients: [] };
+        globalThis.browser = { messages: { getFull: async () => ({ headers: {} }) } };
         let result = await mailService.getCorrespondent(msg);
         expect(result.getEmail()).to.equal(DUCK_REAL_EMAIL);
     });
 
     it('should fallback to original for no Duck relay pattern', async () => {
-        let msg = { author: DUCK_INVALID_RELAY_EMAIL, folder: {}, recipients: [] };
+        let msg = { author: DUCK_INVALID_RELAY_EMAIL, id: 1, folder: {}, recipients: [] };
+        globalThis.browser = { messages: { getFull: async () => ({ headers: {} }) } };
         let result = await mailService.getCorrespondent(msg);
         expect(result.getEmail()).to.equal(DUCK_INVALID_RELAY_EMAIL);
     });
@@ -36,5 +38,19 @@ describe('MailService.getCorrespondent - relays', () => {
         globalThis.browser = { messages: { getFull: async () => ({ headers: {} }) } };
         let result = await mailService.getCorrespondent(msg);
         expect(result.getEmail()).to.equal(GOOGLE_DRIVE_PROXY_EMAIL);
+    });
+
+    it('should use duck-original-from header when present', async () => {
+        let msg = { author: DUCK_RELAY_EMAIL, id: 1, folder: {}, recipients: [] };
+        globalThis.browser = { messages: { getFull: async () => ({ headers: { 'duck-original-from': ['original@sender.com'] } }) } };
+        let result = await mailService.getCorrespondent(msg);
+        expect(result.getEmail()).to.equal('original@sender.com');
+    });
+
+    it('should fallback to email parsing when duck-original-from header is missing', async () => {
+        let msg = { author: DUCK_RELAY_EMAIL, id: 1, folder: {}, recipients: [] };
+        globalThis.browser = { messages: { getFull: async () => ({ headers: {} }) } };
+        let result = await mailService.getCorrespondent(msg);
+        expect(result.getEmail()).to.equal(DUCK_REAL_EMAIL);
     });
 });

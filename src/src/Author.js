@@ -157,4 +157,57 @@ export default class Author {
       return this.getDomain()[0].toUpperCase();
     }
   }
+
+  /**
+   * Retrieves one or two initials for the author according to the following rules:
+   * - If the author string contains a display name with at least two words, use the first letter of the first two words
+   * - Otherwise, if it's an email address, use the local-part and treat '.' as a word separator
+   * - If two letters are not possible, return a single letter (fallbacks to getInitial())
+   * @returns {string} - One or two uppercase initials
+   */
+  getInitials() {
+    // Case 1: Display name present → take first two words' initials
+    if (this.hasName) {
+      const displayName = this.author.split("<")[0].trim();
+      const words = displayName.match(/[A-Za-z]+/g) || [];
+      if (words.length >= 1) {
+        const first = words[0][0];
+        const second = words.length >= 2 ? words[1][0] : null;
+        const initials = second ? first + second : first;
+        return initials.toUpperCase();
+      }
+      // If display name contains no letters, fall through to other strategies
+    }
+
+    // Case 2: Email address available → use local-part with '.' as separator
+    const email = this.mail || this.author || "";
+    const atIndex = email.indexOf("@");
+    if (atIndex !== -1) {
+      const localPart = email.slice(0, atIndex);
+      const segments = localPart.split(".");
+
+      const letters = [];
+      for (const segment of segments) {
+        const match = segment.match(/[A-Za-z]/);
+        if (match) {
+          letters.push(match[0]);
+        }
+        if (letters.length === 2) {
+          break;
+        }
+      }
+
+      if (letters.length >= 1) {
+        return letters.join("").toUpperCase();
+      }
+
+      // If no letters found at all but we do have characters, use the first character
+      if (localPart.length > 0) {
+        return localPart[0].toUpperCase();
+      }
+    }
+
+    // Final fallback: use existing single initial logic (may return '?')
+    return this.getInitial();
+  }
 }

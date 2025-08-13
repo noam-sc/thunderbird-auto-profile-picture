@@ -142,4 +142,28 @@ describe('MailService.getCorrespondent - Proton aliases', () => {
             expect(result.getEmail()).to.equal(expectedEmail);
         });
     });
+
+    describe('Header-based resolution', () => {
+        it('should use x-simplelogin-original-from header when present', async () => {
+            const protonEmail = 'test_at_example_com_suffix@passmail.com';
+            const headerEmail = 'original@sender.com';
+
+            const msg = { author: protonEmail, id: 1, folder: {}, recipients: [] };
+            globalThis.browser = { messages: { getFull: async () => ({ headers: { 'x-simplelogin-original-from': [headerEmail] } }) } };
+            const result = await mailService.getCorrespondent(msg);
+
+            expect(result.getEmail()).to.equal(headerEmail);
+        });
+
+        it('should fallback to email parsing when x-simplelogin-original-from header is missing', async () => {
+            const protonEmail = 'test_at_example_com_suffix@passmail.com';
+            const expectedEmail = 'test@example.com';
+
+            const msg = { author: protonEmail, id: 1, folder: {}, recipients: [] };
+            globalThis.browser = { messages: { getFull: async () => ({ headers: {} }) } };
+            const result = await mailService.getCorrespondent(msg);
+
+            expect(result.getEmail()).to.equal(expectedEmail);
+        });
+    });
 });

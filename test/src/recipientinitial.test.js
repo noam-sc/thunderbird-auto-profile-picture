@@ -154,9 +154,27 @@ describe('RecipientInitial', () => {
 
                 expect(initials).to.have.property('value');
                 expect(initials).to.have.property('color');
-                expect(initials.value).to.match(/^\/\/INITIAL:.$/);
+                expect(initials.value).to.match(/^\/\/INITIAL:[A-Z]{1,2}$/);
                 expect(initials.color).to.be.a('string');
             }
+        });
+
+        it('should produce two initials from display name when possible', async () => {
+            const mail = await Author.fromAuthor('John Paul <john.paul@example.com>');
+            const initials = RecipientInitial.buildInitials(mail);
+            expect(initials.value).to.equal('//INITIAL:JP');
+        });
+
+        it('should produce two initials from email local-part with dot separator', async () => {
+            const mail = await Author.fromAuthor('john.paul@example.com');
+            const initials = RecipientInitial.buildInitials(mail);
+            expect(initials.value).to.equal('//INITIAL:JP');
+        });
+
+        it('should produce one initial when only one segment/letter is available', async () => {
+            const mail = await Author.fromAuthor('john@example.com');
+            const initials = RecipientInitial.buildInitials(mail);
+            expect(initials.value).to.equal('//INITIAL:J');
         });
     });
 });
